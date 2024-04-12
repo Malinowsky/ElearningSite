@@ -1,0 +1,52 @@
+// login.component.scss
+
+// Wyśrodkowanie karty na środku ekranu za pomocą flexboxa
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; // Ustawienie wysokości kontenera na całą wysokość ekranu
+    flex-direction: column;
+  }
+  
+  // Stylowanie mat-card
+  mat-card {
+    max-width: 400px; // Dostosowanie szerokości karty
+    padding: 20px; // Wielkość wewnętrznego odstępu
+  }
+  
+  // Stylowanie elementów formularza
+  mat-form-field {
+    width: 100%; // Pełna szerokość pola formularza
+    margin-bottom: 15px; // Odstęp między polami
+    
+  }
+  
+  // Stylowanie przycisku
+  button {
+    width: 100%; // Pełna szerokość przycisku
+    background-color: #007bff; // Kolor tła przycisku
+    color: #fff; // Kolor tekstu
+    border-radius: 10px;
+  }
+  
+  // Stylowanie przycisku wyłączonego podczas ładowania
+  button[disabled] {
+    opacity: 0.5; // Zmniejszenie przeźroczystości
+    cursor: not-allowed; // Zablokowanie kursora
+  }
+  
+
+  
+  // Stylowanie inputów z błędem
+  .mat-form-field-invalid .mat-form-field-underline {
+    background-color: #dc3545; // Kolor podkreślenia inputu z błędem
+  }
+  
+  // Stylowanie inputów poprawnych
+  .mat-form-field.mat-form-field-invalid {
+    .mat-form-field-ripple {
+      background-color: #28a745; // Kolor efektu falowania inputu poprawnego
+    }
+  }
+  

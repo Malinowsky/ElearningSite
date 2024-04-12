@@ -1,0 +1,67 @@
+<div class="container">
+  <mat-card>
+    <app-alert
+      *ngIf="successMessage"
+      [success]="true"
+      [message]="successMessage"
+      (close)="successMessage = ''"
+    ></app-alert>
+    <app-alert
+      *ngIf="errorMessage"
+      [success]="false"
+      [message]="errorMessage"
+      (close)="errorMessage = ''"
+    ></app-alert>
+    <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="email"
+          id="email"
+          placeholder="E-Mail"
+          ngModel
+          name="email"
+          required
+          email
+        />
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="text"
+          id="displayName"
+          placeholder="Nickname"
+          ngModel
+          name="nickname"
+          required
+          nickname
+        />
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="password"
+          id="password"
+          placeholder="Password"
+          ngModel
+          name="password"
+          required
+          minlength="6"
+        />
+      </mat-form-field>
+
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!signupForm.valid || isLoading"
+        >
+          Sign Up
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

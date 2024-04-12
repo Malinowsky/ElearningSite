@@ -1,0 +1,7 @@
+<div class="alert-container" [ngClass]="{'success': success, 'error': !success}">
+  <mat-icon>{{ success ? 'check_circle' : 'error' }}</mat-icon>
+  <span>{{ message }}</span>
+  <button mat-icon-button (click)="closeAlert()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

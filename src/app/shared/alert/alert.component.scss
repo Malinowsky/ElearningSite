@@ -1,0 +1,31 @@
+.alert-container {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+.alert-container.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-container.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.mat-icon {
+  margin-right: 8px;
+  font-size: 24px;
+}
+
+button {
+  margin-left: auto;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
