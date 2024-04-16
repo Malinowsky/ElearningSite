@@ -5,11 +5,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SignupTeacherComponent } from './auth/signup-teacher/signup-teacher.component';
 import { AuthGuard } from './auth/auth.guard';
+import { CourseListComponent } from './courses/components/course-list/course-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: CourseListComponent,
     canActivate: [AuthGuard],
   },
   { path: 'login', component: LoginComponent },

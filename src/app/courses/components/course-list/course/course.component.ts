@@ -1,10 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Course } from '../course.model';
 
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
-  styleUrl: './course.component.scss'
+  styleUrls: ['./course.component.scss'],
 })
 export class CourseComponent {
+  @Input() course: Course;
 
+  constructor() {
+    this.course = new Course(
+      '',
+      '',
+      '',
+      '',
+      ['English'], // zmieniamy na tablicę zawierającą pojedynczy string
+      '',
+      '',
+      0,
+      false,
+      [],
+      [],
+      0,
+      ['Programming', 'Web Development'],
+      'Intermediate'
+    );
+  }
 }

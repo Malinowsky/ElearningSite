@@ -1,6 +1,36 @@
-<div *ngIf="courses$ | async as courses; else loading">
-  <div *ngFor="let course of courses">
-    <app-course [course]="course"></app-course>
+<div class="slider-container">
+  <div class="slider">
+    <div class="slides" [style.transform]="'translateX(' + (-currentIndex * 25) + '%)'">
+      <div class="slide" *ngFor="let course of sliderCourses">
+        <div class="course">
+          <img [src]="course.imageUrl" alt="{{ course.title }}">
+          <div class="course-details">
+            <h3>{{ shortenTitle(course.title) }}</h3>
+            <p [ngClass]="{ 'long-subtitle': shouldWrapSubtitle(course.subtitle) }">{{ course.subtitle }}</p>
+            <p>Rating: {{ course.userRating }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="prev" (click)="prev()">❮</button>
+    <button class="next" (click)="next()">❯</button>
   </div>
 </div>
+
+<div class="course-list-container">
+  <app-filters
+    (categorySelected)="onCategorySelected($event)"
+    (languageSelected)="onLanguageSelected($event)">
+  </app-filters>
+
+  <mat-list class="course-list">
+    <mat-list-item *ngFor="let course of filteredCourses" class="course-item">
+      <h4 matLine>{{ course.title }}</h4>
+      <p matLine>{{ course.subtitle }}</p>
+      <p matLine>Rating: {{ course.userRating }}</p>
+    </mat-list-item>
+  </mat-list>
+</div>
+
+
 <ng-template #loading>Loading courses...</ng-template>

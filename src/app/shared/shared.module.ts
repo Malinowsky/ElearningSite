@@ -13,6 +13,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AlertComponent } from './alert/alert.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [AlertComponent],
@@ -30,6 +33,10 @@ import { AlertComponent } from './alert/alert.component';
     MatCardModule,
     MatInputModule,
     MatSnackBarModule,
+    MatGridListModule,
+    MatStepperModule,
+    MatSelectModule,
+
   ],
   exports: [
     CommonModule,
@@ -46,6 +53,9 @@ import { AlertComponent } from './alert/alert.component';
     MatInputModule,
     MatSnackBarModule,
     AlertComponent,
+    MatGridListModule,
+    MatStepperModule,
+    MatSelectModule,
   ],
 })
 export class SharedModule {}

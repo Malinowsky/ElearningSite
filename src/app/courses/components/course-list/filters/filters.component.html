@@ -1,0 +1,44 @@
+<div class="filters-container">
+    <mat-form-field class="filter-select">
+      <mat-label>Select Category</mat-label>
+      <mat-select [(value)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)">
+        <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field class="filter-select">
+      <mat-label>Select Language</mat-label>
+      <mat-select [(value)]="selectedLanguage" (selectionChange)="onLanguageChange($event.value)">
+        <mat-option *ngFor="let language of languages" [value]="language">{{ language }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field class="filter-select">
+      <mat-label>Select Difficulty</mat-label>
+      <mat-select [(value)]="selectedDifficulty" (selectionChange)="onDifficultyChange($event.value)">
+        <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">{{ difficulty }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field class="filter-select">
+      <mat-label>Select Instructor</mat-label>
+      <mat-select [(value)]="selectedInstructor" (selectionChange)="onInstructorChange($event.value)">
+        <mat-option *ngFor="let instructor of instructors" [value]="instructor">{{ instructor }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field class="filter-select">
+      <mat-label>Select Price Range</mat-label>
+      <mat-select [(value)]="selectedPriceRange" (selectionChange)="onPriceRangeChange($event.value)">
+        <mat-option *ngFor="let priceRange of priceRanges" [value]="priceRange.value">{{ priceRange.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field class="filter-select">
+      <mat-label>Select Rating</mat-label>
+      <mat-select [(value)]="selectedRating" (selectionChange)="onRatingChange($event.value)">
+        <mat-option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  

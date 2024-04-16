@@ -13,20 +13,29 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core.module';
 import { AuthModule } from './auth/auth.module';
 import { HeaderComponent } from './header/header.component';
+import { CoursesModule } from './courses/courses.module';
+import { CoursesRoutingModule } from './courses/courses-routing.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    
   ],
   imports: [
     BrowserModule,
+
     AppRoutingModule,
+
     NgbModule, 
     SharedModule,
     HttpClientModule,
     CoreModule,
-    AuthModule
+
+    AuthModule,
+    CoursesModule,
+
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],
