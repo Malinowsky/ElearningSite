@@ -1,0 +1,51 @@
+/* Dekoracja listy */
+.filters-container {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Odstęp między elementami */
+    justify-content: center; /* Wyśrodkowanie elementów wzdłuż osi głównej */
+  }
+  
+  .mat-form-field-wrapper {
+    border-radius: 8px; /* Zaokrąglenie krawędzi */
+  }
+
+  .mat-form-field-label {
+    color: #333; /* Kolor tekstu etykiety */
+  }
+  
+  /* Styl dla każdego elementu listy */
+  .filter-select {
+    width: calc(20% - 10px); /* Szerokość elementu listy z uwzględnieniem odstępu */
+  }
+  
+  /* Opcjonalne style dla mat-select */
+  .mat-select-trigger {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .mat-select-panel {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .mat-select {
+    font-size: 16px;
+    min-width: 100%;
+  }
+  
+  .mat-option {
+    font-size: 16px;
+  }
+  
+  .mat-option:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .mat-option.mat-selected {
+    background-color: #e0e0e0;
+  }
+  

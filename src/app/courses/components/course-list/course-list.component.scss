@@ -1,3 +1,7 @@
+.global{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .slider-container {
   overflow-x: hidden;
   white-space: nowrap;
@@ -70,25 +74,30 @@
   }
 }
 
+.desciprtion{
+  background-color: #f0f0f0;
+  color:#414141;
+  text-align: center;
+  padding-bottom: 8%;
+  padding-top: 8%;
+  border-radius: 15px;
+  word-spacing: 30px;
+
+  h3 {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
 .long-subtitle {
   white-space: pre-wrap;
 }
 
 
-//filter form
-.filter-container {
-  margin-bottom: 20px;
-}
-
-.filter-select {
-  width: 20%;
-  border-radius: 15px;
-}
-
 //course filter list
 
-.course-list {
-  border-radius: 8px;
+.course-list-container {
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -120,9 +129,7 @@
 }
 
 .mat-select {
-  font-size: 16px;
-  color: #007bff !important;
-}
+  font-size: 16px;}
 
 .mat-option {
   font-size: 16px;

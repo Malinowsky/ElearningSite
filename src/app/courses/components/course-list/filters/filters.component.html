@@ -1,8 +1,15 @@
 <div class="filters-container">
-    <mat-form-field class="filter-select">
-      <mat-label>Select Category</mat-label>
-      <mat-select [(value)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)">
-        <mat-option *ngFor="let category of categories" [value]="category">{{ category }}</mat-option>
+  <mat-form-field class="filter-select">
+    <mat-label>Select Category</mat-label>
+    <mat-select [(value)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)">
+      <mat-option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+    <mat-form-field class="filter-select" *ngIf="selectedCategory">
+      <mat-label>Select Subcategory</mat-label>
+      <mat-select [(value)]="selectedSubcategory">
+        <mat-option *ngFor="let subcategory of getCategory(selectedCategory).subcategories" [value]="subcategory">{{ subcategory }}</mat-option>
       </mat-select>
     </mat-form-field>
   
@@ -37,8 +44,19 @@
     <mat-form-field class="filter-select">
       <mat-label>Select Rating</mat-label>
       <mat-select [(value)]="selectedRating" (selectionChange)="onRatingChange($event.value)">
-        <mat-option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</mat-option>
+        <mat-option *ngFor="let rating of ratings" [value]="rating.value">{{ rating.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="filter-select">
+      <mat-label>Select Course Age</mat-label>
+      <mat-select [(value)]="selectedCourseAge" (selectionChange)="onCourseAgeChange($event.value)">
+        <mat-option *ngFor="let courseAge of courseAges" [value]="courseAge.value">{{ courseAge.label }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
+
+  
+
+  <button mat-raised-button color="primary" (click)="searchCourses()">Search</button>
   

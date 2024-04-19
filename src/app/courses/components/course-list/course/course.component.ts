@@ -24,7 +24,13 @@ export class CourseComponent {
       [],
       0,
       ['Programming', 'Web Development'],
-      'Intermediate'
+      ['Node.js'],
+      'Intermediate',
+      new Date(),
+      new Date(),
+      ['Node.js'],
+      10,
+      true
     );
   }
 }
