@@ -28,19 +28,79 @@
         />
       </mat-form-field>
 
+      <!-- Pole "Name & Surname" -->
       <mat-form-field class="form-group">
         <input
           matInput
           type="text"
           id="namesurname"
-          placeholder="Name & Surname (e.ig Jan Kowalski)"
+          placeholder="Name & Surname (e.g. Jan Kowalski)"
           ngModel
           name="namesurname"
           required
-          namesurname
         />
       </mat-form-field>
 
+      <!-- Dodatkowe pola dla nauczyciela -->
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="text"
+          id="phoneNumber"
+          placeholder="Phone Number"
+          ngModel
+          name="phoneNumber"
+        />
+      </mat-form-field>
+
+      <!-- Pole adresu -->
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="text"
+          id="street"
+          placeholder="Street"
+          ngModel
+          name="street"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="text"
+          id="city"
+          placeholder="City"
+          ngModel
+          name="city"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="text"
+          id="postalCode"
+          placeholder="Postal Code"
+          ngModel
+          name="postalCode"
+          required
+        />
+      </mat-form-field>
+
+      <!-- Pole daty urodzenia -->
+      <mat-form-field class="form-group">
+        <input
+          matInput
+          type="text"
+          id="dateOfBirth"
+          placeholder="Date of Birth"
+          ngModel
+          name="dateOfBirth"
+        />
+      </mat-form-field>
+
+      <!-- Pole hasła -->
       <mat-form-field class="form-group">
         <input
           matInput
@@ -54,6 +114,7 @@
         />
       </mat-form-field>
 
+      <!-- Warunkowe wyświetlanie przycisku "Become a Teacher" -->
       <div>
         <button
           mat-raised-button
@@ -61,7 +122,7 @@
           type="submit"
           [disabled]="!signupForm.valid || isLoading"
         >
-          Sign Up
+          Become a Teacher
         </button>
       </div>
     </form>

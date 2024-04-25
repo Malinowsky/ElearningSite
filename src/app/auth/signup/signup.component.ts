@@ -23,12 +23,13 @@ export class SignupComponent implements OnInit {
       return;
     }
     const email = form.value.email;
+    const nickname = form.value.nickname;
     const password = form.value.password;
     const role = 'student';
 
     this.isLoading = true;
 
-    this.authService.signup(email, password, role).subscribe(
+    this.authService.signup(email, password, role, nickname).subscribe(
       resData => {
         this.successMessage = 'You have been successfully sign up.';
         this.errorMessage = '';

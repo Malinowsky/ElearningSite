@@ -14,7 +14,10 @@ import { CoreModule } from './core.module';
 import { AuthModule } from './auth/auth.module';
 import { HeaderComponent } from './header/header.component';
 import { CoursesModule } from './courses/courses.module';
-import { CoursesRoutingModule } from './courses/courses-routing.module';
+import { CoursesRoutingModule } from './courses/components/course-list/course.routing.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -35,6 +38,8 @@ import { CoursesRoutingModule } from './courses/courses-routing.module';
 
     AuthModule,
     CoursesModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
 
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],

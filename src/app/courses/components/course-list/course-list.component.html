@@ -1,4 +1,5 @@
 <div class="global">
+  <div class="container">
   <div
     *ngIf="sliderCourses && sliderCourses.length > 0"
     class="slider-container"
@@ -9,20 +10,7 @@
         [style.transform]="'translateX(' + -currentIndex * 25 + '%)'"
       >
         <div class="slide" *ngFor="let course of sliderCourses">
-          <div class="course">
-            <img [src]="course.imageUrl" alt="{{ course.title }}" />
-            <div class="course-details">
-              <h3>{{ shortenTitle(course.title) }}</h3>
-              <p
-                [ngClass]="{
-                  'long-subtitle': shouldWrapSubtitle(course.subtitle)
-                }"
-              >
-                {{ course.subtitle }}
-              </p>
-              <p>Rating: {{ course.userRating }}</p>
-            </div>
-          </div>
+          <app-course-item [course]="course" (click)="navigateToCourse(course)"></app-course-item>
         </div>
       </div>
       <button class="prev" (click)="prev()">❮</button>
@@ -34,26 +22,26 @@
     <h3>Upgrade your knowledge with our comprehensive courses</h3>
   </div>
 
-  <div class="course-list-container">
-    <app-filters
-      (categorySelected)="onCategorySelected($event)"
-      (subcategorySelected)="onSubcategorySelected($event)"
-      (languageSelected)="onLanguageSelected($event)"
-      (difficultySelected)="onDifficultySelected($event)"
-      (instructorSelected)="onInstructorSelected($event)"
-      (priceRangeSelected)="onPriceRangeSelected($event)"
-      (ratingSelected)="onRatingSelected($event)"
-      (courseAgeSelected)="onCourseAgeSelected($event)"
-    ></app-filters>
+  <app-filters
+    (categorySelected)="onCategorySelected($event)"
+    (subcategorySelected)="onSubcategorySelected($event)"
+    (languageSelected)="onLanguageSelected($event)"
+    (difficultySelected)="onDifficultySelected($event)"
+    (instructorSelected)="onInstructorSelected($event)"
+    (priceRangeSelected)="onPriceRangeSelected($event)"
+    (ratingSelected)="onRatingSelected($event)"
+    (courseAgeSelected)="onCourseAgeSelected($event)"
+  ></app-filters>
 
-    <mat-list class="course-list">
-      <mat-list-item *ngFor="let course of filteredCourses" class="course-item">
-        <h4 matLine>{{ course.title }}</h4>
-        <p matLine>{{ course.subtitle }}</p>
-        <p matLine>Rating: {{ course.userRating }}</p>
-      </mat-list-item>
-    </mat-list>
+  <div class="course-list">
+    <app-course-item
+      *ngFor="let course of filteredCourses"
+      [course]="course"
+      (click)="navigateToCourse(course)"
+    >
+    </app-course-item>
   </div>
 
   <ng-template #loading>Loading courses...</ng-template>
+  </div>
 </div>

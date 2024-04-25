@@ -161,6 +161,11 @@ export class CourseService {
     },
   ];
 
+  getCourseById(courseId: string): Course | null {
+    const course = this.courses.find(course => course.id === courseId);
+    return course ? course : null;
+  }
+
   getAllCourses() {
     return this.courses;
   }
@@ -176,6 +181,22 @@ export class CourseService {
 
     return randomCourses;
   }
+  
+
+  updateCourse(id: string, updatedCourse: Course): void {
+    const index = this.courses.findIndex(course => course.id === id);
+    if (index !== -1) {
+      this.courses[index] = updatedCourse;
+    } else {
+      console.error(`Course with id ${id} not found.`);
+    }
+  }
+
+  addCourse(newCourse: Course): void {
+    newCourse.id = (this.courses.length + 1).toString(); // Generate a unique ID
+    this.courses.push(newCourse);
+  }
+  
 
   public filterCourses(
     category: string | null,
@@ -274,4 +295,12 @@ export class CourseService {
     return createdAt > boundaryDate;
   }
   
+
+  shortenTitle(title: string, maxLength: number): string {
+    return title.length > maxLength ? title.slice(0, maxLength) + '...' : title; // Przytnij tytuł do określonej długości
+  }
+
+  shouldWrapSubtitle(subtitle: string): boolean {
+    return subtitle.length > 20; // Sprawdź, czy podtytuł powinien być zawinięty
+  }
 }

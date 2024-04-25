@@ -1,0 +1,16 @@
+<a
+  [routerLink]="'/course/' + course?.id"
+  routerLinkActive="active"
+  class="course-tile"
+>
+  <div class="course">
+    <img [src]="course?.imageUrl" [alt]="course?.title" class="course-image" />
+    <div class="course-details">
+      <h3>{{ shortenTitle(course?.title) }}</h3>
+      <p [ngClass]="{ 'long-subtitle': shouldWrapSubtitle(course?.subtitle) }">
+        {{ course?.subtitle }}
+      </p>
+      <p>Rating: {{ course?.userRating }}</p>
+    </div>
+  </div>
+</a>

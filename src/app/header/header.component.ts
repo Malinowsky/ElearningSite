@@ -1,6 +1,6 @@
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
-import { Observable, map, shareReplay } from 'rxjs';
+import { Observable, filter, map, shareReplay } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -10,12 +10,25 @@ import { AuthService } from '../auth/auth.service';
 
 })
 export class HeaderComponent {
+  isTeacher$: Observable<boolean> | undefined; 
+  isStudent$: Observable<boolean> | undefined; 
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    public authService: AuthService
+  ) {}
 
-  isAuthenticated = false;
-  searchTerm: any;
+  ngOnInit() {
+    this.isTeacher$ = this.authService.user.pipe(
+      filter(user => user !== null),
+      map(user => user!.role === 'teacher')
+    );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {}
-
+    this.isStudent$ = this.authService.user.pipe(
+      filter(user => user !== null),
+      map(user => user!.role === 'student')
+    );
+  }
+  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Handset])
     .pipe(
       map(result => result.matches),
@@ -25,8 +38,4 @@ export class HeaderComponent {
   logout() {
     this.authService.logout();
   }
-
-  clearSearch() {
-    throw new Error('Method not implemented.');
-    }
 }

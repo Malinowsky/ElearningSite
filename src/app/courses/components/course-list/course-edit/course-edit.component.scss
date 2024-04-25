@@ -1,0 +1,79 @@
+.course-edit {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    margin-right: 15%;
+    margin-top: 1%;
+    margin-left: 15%;
+  
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    .form-group {
+      margin-bottom: 20px;
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+  
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+  
+      textarea {
+        height: 100px;
+      }
+  
+      input[type="checkbox"] {
+        margin-top: 5px;
+      }
+    }
+  
+    .lesson {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+  
+      input {
+        width: calc(50% - 15px);
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  
+    button {
+      border-radius: 20px;
+      padding: 12px 20px;
+      font-size: 12px;
+      transition: filter 0.3s ease;
+  
+      &:hover {
+        filter: brightness(90%);
+      }
+  
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  
+    .btn-primary {
+      background-color: blue;
+      color: #fff;
+    }
+  }
+  

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core'; // Move import to the 
 
 import { Course } from './course.model';
 import { CourseService } from '../../services/course.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 type CourseFilter = {
   [key: string]: string | null | undefined;
@@ -28,10 +29,20 @@ export class CourseListComponent implements OnInit {
   selectAgeCourse: string | null = null;
   selectedRating: string | null = null;
 
-  constructor(private courseService: CourseService) {}
+  constructor(private router:Router, private courseService: CourseService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.fetchCourses();
+  }
+
+  navigateToCourse(course: Course) {
+    // Uzyskaj ID kursu
+    const courseId = course.id;
+    console.log("Course ID:", courseId);
+  
+
+    // Przejdź do ścieżki kursu
+    this.router.navigate(['/course/'],{relativeTo: this.route});
   }
 
   fetchCourses() {
@@ -147,11 +158,5 @@ export class CourseListComponent implements OnInit {
     }
   }
 
-  shortenTitle(title: string): string {
-    return title.length > 13 ? title.slice(0, 13) + '...' : title;
-  }
-
-  shouldWrapSubtitle(subtitle: string): boolean {
-    return subtitle.length > 20;
-  }
+  
 }

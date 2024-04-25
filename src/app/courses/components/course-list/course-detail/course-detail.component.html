@@ -1,0 +1,89 @@
+<div *ngIf="course" class="course-card">
+  <div class="course-header">
+    <img
+      [src]="course.imageUrl"
+      alt="{{ course.title }}"
+      class="course-image"
+    />
+
+    <div class="course-details">
+      <h2>{{ course.title }}</h2>
+      <h3>{{ course.subtitle }}</h3>
+      <p>{{ course.description }}</p>
+    </div>
+
+    <div class="course-main-content">
+      <div class="top-content">
+        <div class="info-button">
+          <button mat-raised-button class="info-button non-clickable">
+            Language: {{ course.language.join(", ") }}
+          </button>
+        </div>
+        <div class="info-button">
+          <button mat-raised-button class="info-button non-clickable">
+            Created At: {{ course.createdAt | date }}
+          </button>
+        </div>
+        <div class="info-button">
+          <button mat-raised-button class="info-button non-clickable">
+            Updated At: {{ course.updatedAt | date }}
+          </button>
+        </div>
+        <div class="info-button">
+          <button
+            mat-raised-button
+            class="info-button non-clickable"
+            *ngIf="course.isLive"
+            [ngStyle]="{color: 'red', }"
+          >
+            Live Course
+          </button>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <div class="info-button">
+          <button
+            mat-raised-button
+            class="info-button non-clickable"
+            color="success"
+          >
+            {{ course.isFree ? "Free" : "$" + course.price }}
+          </button>
+        </div>
+        <button mat-raised-button color="primary" type="submit">Buy</button>
+        <button mat-raised-button color="accent" type="button">
+          Add to favorites
+        </button>
+        <button mat-raised-button type="button">Add to cart</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="course-content">
+    <button mat-raised-button class="info-button non-clickable">
+      Instructor: {{ course.instructor }}
+    </button>
+    <button mat-raised-button class="info-button non-clickable">
+      Rating: {{ course.userRating }}
+    </button>
+    <button mat-raised-button class="info-button non-clickable">
+      Subcategory: {{ course.subcategory.join(", ") }}
+    </button>
+    <button mat-raised-button class="info-button non-clickable">
+      Difficulty: {{ course.difficulty }}
+    </button>
+    <button mat-raised-button class="info-button non-clickable">
+      Hours: {{ course.hours }}
+    </button>
+    <button mat-raised-button class="info-button non-clickable">
+      Tags: {{ course.tags.join(", ") }}
+    </button>
+  </div>
+  <h4>Lessons:</h4>
+  <ul>
+    <li *ngFor="let lesson of course.lessons">
+      {{ lesson.title }} - {{ lesson.duration }} minutes
+    </li>
+  </ul>
+</div>

@@ -9,7 +9,7 @@ export class User {
       public role?: 'teacher' | 'student' | 'undefined',
       public avatarUrl?: string,
       public phoneNumber?: string,
-      public dateOfBirth?: Date,
+      public dateOfBirth?: string,
       public address?: {
         street?: string;
         city?: string;

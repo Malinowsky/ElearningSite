@@ -1,0 +1,88 @@
+<div *ngIf="course" class="course-edit">
+    <h1>Edit Course</h1>
+  
+    <div class="form-group">
+      <label>Title:</label>
+      <input type="text" class="form-control" [(ngModel)]="course.title" name="title">
+    </div>
+  
+    <div class="form-group">
+      <label>Subtitle:</label>
+      <input type="text" class="form-control" [(ngModel)]="course.subtitle" name="subtitle">
+    </div>
+  
+    <div class="form-group">
+      <label>Description:</label>
+      <textarea class="form-control" [(ngModel)]="course.description" name="description"></textarea>
+    </div>
+  
+    <div class="form-group">
+      <label>Image URL:</label>
+      <input type="text" class="form-control" [(ngModel)]="course.imageUrl" name="imageUrl">
+    </div>
+  
+    <div class="form-group">
+      <label>Language:</label>
+      <input type="text" class="form-control" [(ngModel)]="course.language" name="language">
+    </div>
+  
+    <div class="form-group">
+      <label>Price:</label>
+      <input type="number" class="form-control" [(ngModel)]="course.price" name="price">
+    </div>
+  
+    <div class="form-group">
+      <label>Is Free:</label>
+      <input type="checkbox" class="form-check-input" [(ngModel)]="course.isFree" name="isFree">
+    </div>
+  
+    <div class="form-group">
+      <label>Is Live:</label>
+      <input type="checkbox" class="form-check-input" [(ngModel)]="course.isLive" name="isLive">
+    </div>
+  
+    <div class="form-group">
+      <label>Instructor:</label>
+      <input type="text" class="form-control" [(ngModel)]="course.instructor" name="instructor">
+    </div>
+  
+    <div class="form-group">
+      <label>User Rating:</label>
+      <input type="number" class="form-control" [(ngModel)]="course.userRating" name="userRating">
+    </div>
+  
+    <div class="form-group">
+      <label>Subcategory:</label>
+      <input type="text" class="form-control" [(ngModel)]="course.subcategory" name="subcategory">
+    </div>
+  
+    <div class="form-group">
+      <label>Difficulty:</label>
+      <input type="text" class="form-control" [(ngModel)]="course.difficulty" name="difficulty">
+    </div>
+  
+    <div class="form-group">
+      <label>Hours:</label>
+      <input type="number" class="form-control" [(ngModel)]="course.hours" name="hours">
+    </div>
+  
+    <div class="form-group">
+      <label>Tags:</label>
+      <input type="text" class="form-control" [(ngModel)]="course.tags" name="tags">
+    </div>
+  
+    <h2>Lessons:</h2>
+    <ul>
+      <li *ngFor="let lesson of course.lessons; let i = index">
+        <div class="lesson">
+          <label>Title:</label>
+          <input type="text" class="form-control" [(ngModel)]="course.lessons[i].title" name="lessonTitle{{i}}">
+          <label>Duration:</label>
+          <input type="number" class="form-control" [(ngModel)]="course.lessons[i].duration" name="lessonDuration{{i}}">
+        </div>
+      </li>
+    </ul>
+  
+    <button class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
+  </div>
+  

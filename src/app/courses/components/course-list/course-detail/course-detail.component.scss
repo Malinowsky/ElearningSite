@@ -1,0 +1,127 @@
+.course-card {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  margin-right: 15%;
+  margin-top: 1%;
+  margin-left: 15%;
+
+  .course-header {
+    background-color: #f5f5f5;
+    display: flex;
+    padding: 20px;
+    height: 350px;
+    position: relative;
+
+  }
+  .course-header h2 {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .course-header h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .course-image {
+    max-width: 50%;
+    height: 100%;
+    border-radius: 15px;
+    flex-shrink: 0; /* Zapobieganie zmniejszaniu obrazka */
+    margin-right: 20px; /* Dodatkowy margines między obrazkiem a tekstem */
+    transition: filter 0.3s ease;
+    cursor: grab;
+    position: relative; /* Ustawienie pozycji względnej, aby móc użyć pseudo-elementu */
+  }
+
+  .course-image:hover {
+    filter: grayscale(100%);
+  }
+}
+
+.course-details {
+  flex-grow: 1; /* Elastyczne dopasowanie szerokości */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Wyśrodkowanie w pionie */
+}
+
+
+.course-main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Rozłożenie elementów w pionie */
+  align-items: flex-end; /* Przesunięcie elementów na prawy bok */
+  .buttons {
+    margin-top: auto;
+    display: flex;
+  
+    button {
+      margin-right: 10px; /* Increased margin between buttons */
+      border-radius: 20px; /* Increased border radius for a rounder look */
+      padding: 12px 20px; /* Increased padding for larger buttons */
+      font-size: 12px; /* Increased font size for better readability */
+      transition: filter 0.3s ease;
+    }
+  
+    button:hover {
+      filter: brightness(90%);
+    }
+  
+    .mat-icon-button {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  
+    button[type="button"] {
+      flex-grow: 0;
+    }
+
+    .mat-success {
+      background-color: green;
+      color: #fff;
+      cursor: initial ;
+  }
+  }
+}
+
+.top-content{
+  text-align: right;
+  .info-button{
+    border-radius: 15px;
+    margin-bottom: 5px;
+    cursor: initial ;
+  }
+}
+
+.course-content {
+  padding: 20px;
+  cursor: initial ;
+  button{
+    border-radius: 15px;
+    margin-right: 10px; /* Increased margin between buttons */
+  }
+}
+
+.course-lessons {
+  float: right;
+  margin-left: 20px; /* Dodatkowy margines, aby oddzielić sekcję lekcji od treści */
+  width: 40%; /* Ustawienie szerokości sekcji lekcji */
+
+  .course-lessons h4 {
+    margin-bottom: 10px;
+  }
+  
+  .course-lessons ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .course-lessons li {
+    margin-bottom: 5px;
+  }
+}
+
+
