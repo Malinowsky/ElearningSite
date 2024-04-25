@@ -25,27 +25,13 @@ export class AuthService {
 
   constructor(private firestore: AngularFirestore,private http: HttpClient, private router: Router) {}
 
-  getUserData(userId: string) {
-    // Adres URL do zapytania o dane użytkownika na podstawie jego identyfikatora
-    const url = `https://your-firebase-database-url/users/${userId}.json`;
-
-    // Wyślij zapytanie GET do Firebase API
-    return this.http.get<User>(url).pipe(
-      catchError((error) => {
-        // Obsługa błędów w przypadku niepowodzenia zapytania
-        console.error('Error fetching user data:', error);
-        return throwError('Error fetching user data');
-      })
-    );
-  }
-
   signup(
     email: string,
     password: string,
     role: 'teacher' | 'student',
     displayName?: string,
     phoneNumber?: string,
-    address?: { street?: string; city?: string; postalCode?: string }, // Zmieniono typ parametru address
+    address?: { street?: string; city?: string; postalCode?: string },
     dateOfBirth?: string
   ) {
     let signupData: any = {
@@ -54,14 +40,11 @@ export class AuthService {
       role: role,
       returnSecureToken: true,
     };
-
-    // Dodawanie opcjonalnych danych do obiektu signupData, jeśli zostały przekazane
     if (displayName) signupData.displayName = displayName;
     if (phoneNumber) signupData.phoneNumber = phoneNumber;
     if (address) signupData.address = address;
     if (dateOfBirth) signupData.dateOfBirth = dateOfBirth;
 
-    // Tutaj sprawdzamy, czy użytkownik jest już zalogowany
     const currentUser = this.user.value;
     if (currentUser && currentUser.role === 'student') {
       signupData.role = 'teacher';
@@ -76,7 +59,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap((resData) => {
-          this.handleAuthentication(
+          this.handleSignupAuthentication(
             resData.email,
             resData.localId,
             resData.idToken,
@@ -84,7 +67,7 @@ export class AuthService {
             role,
             displayName,
             phoneNumber,
-            address, // Przekazujemy obiekt address
+            address,
             dateOfBirth
           );
         })
@@ -105,7 +88,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap((resData) => {
-          this.handleAuthentication(
+          this.handleLoginAuthentication(
             resData.email,
             resData.localId,
             resData.idToken,
@@ -164,21 +147,18 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  handleAuthentication(
+  handleSignupAuthentication(
     email: string,
     userId: string,
     token: string,
     expiresIn: number,
-    role?: 'teacher' | 'student' | 'undefined',
+    role: 'teacher' | 'student',
     displayName?: string,
     phoneNumber?: string,
     address?: { street?: string; city?: string; postalCode?: string },
     dateOfBirth?: string
   ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    if (!role || (role !== 'teacher' && role !== 'student')) {
-      role = 'undefined';
-    }
     const user = new User(
       userId,
       email,
@@ -196,37 +176,63 @@ export class AuthService {
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
-    console.log('User authenticated:', user);
+    console.log('User authenticated (signup):', user);
   
-    // Tworzymy obiekt zawierający tylko zdefiniowane wartości adresu
+    const phoneNumberData = phoneNumber || null;
     const addressData = address ? {
       street: address.street || null,
       city: address.city || null,
       postalCode: address.postalCode || null
     } : null;
+    const dateOfBirthData = dateOfBirth || null;
   
-    // Dodaj użytkownika do bazy danych Firestore
     this.firestore.collection('users').doc(userId).set({
       email: email,
-      displayName: displayName || null,
-      phoneNumber: phoneNumber || null,
+      displayName: displayName,
+      phoneNumber: phoneNumberData,
       role: role,
       address: addressData,
-      dateOfBirth: dateOfBirth || null
+      dateOfBirth: dateOfBirthData,
     })
     .then(() => {
       console.log('User added to Firestore:', userId);
     })
     .catch(error => {
       console.error('Error adding user to Firestore:', error);
-      // Tutaj możesz obsłużyć błąd dodawania użytkownika do Firestore
     });
   }
-  
 
+  handleLoginAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number,
+    displayName?: string,
+    phoneNumber?: string,
+    address?: { street?: string; city?: string; postalCode?: string },
+    dateOfBirth?: string
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(
+      userId,
+      email,
+      token,
+      expirationDate,
+      displayName,
+      undefined, // Nie przekazujemy roli podczas logowania
+      undefined,
+      phoneNumber,
+      dateOfBirth,
+      address,
+      new Date()
+    );
   
-
-  
+    this.user.next(user);
+    this.autoLogout(expiresIn * 1000);
+    localStorage.setItem('userData', JSON.stringify(user));
+    console.log('User authenticated (login):', user);
+  }
+   
 
   private handleError(errorRes: HttpErrorResponse) {
     console.error('Error response:', errorRes);

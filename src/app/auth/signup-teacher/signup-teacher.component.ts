@@ -33,23 +33,21 @@ export class SignupTeacherComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-    console.log('Email:', form.value.email);
-    console.log('Password:', form.value.password);
-    console.log('Name & Surname:', form.value.namesurname);
-    console.log('Phone Number:', form.value.phoneNumber);
-    console.log('Address:', form.value.address);
-    console.log('Date of Birth:', form.value.dateOfBirth);
-  
+    console.log('Form value:', form.value); // Dodaj ten log
     const email = form.value.email;
     const password = form.value.password;
     const displayName = form.value.namesurname;
     const role = 'teacher';
     const phoneNumber = form.value.phoneNumber;
-    const address = form.value.address;
+    const address = {
+      street: form.value.street, // Pobierz wartość pola Street
+      city: form.value.city, // Pobierz wartość pola City
+      postalCode: form.value.postalCode // Pobierz wartość pola Postal Code
+    };
     const dateOfBirth = form.value.dateOfBirth;
-  
+
     this.isLoading = true;
-  
+
     console.log('Signup Data:', {
       email,
       password,
@@ -59,7 +57,7 @@ export class SignupTeacherComponent implements OnInit {
       address,
       dateOfBirth
     });
-  
+
     this.authService
       .signup(
         email,
@@ -82,7 +80,7 @@ export class SignupTeacherComponent implements OnInit {
           this.isLoading = false;
         }
       );
-  
+
     form.reset();
   }
   

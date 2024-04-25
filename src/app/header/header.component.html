@@ -13,9 +13,29 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/" (click)="drawer.close()">Home</a>
       <a mat-list-item routerLink="/kanban" (click)="drawer.close()">Courses</a>
-      <a mat-list-item routerLink="/login" *ngIf="!(authService.user | async)?.email" (click)="drawer.close()">Login</a>
-      <a mat-list-item routerLink="/signup" *ngIf="!(authService.user | async)?.email" (click)="drawer.close()">Signup</a>
-      <a mat-list-item routerLink="/signup/teacher" *ngIf="!(authService.user | async)?.email && !(authService.user | async)?.role">Become a teacher</a>
+      <a
+        mat-list-item
+        routerLink="/login"
+        *ngIf="!(authService.user | async)?.email"
+        (click)="drawer.close()"
+        >Login</a
+      >
+      <a
+        mat-list-item
+        routerLink="/signup"
+        *ngIf="!(authService.user | async)?.email"
+        (click)="drawer.close()"
+        >Signup</a
+      >
+      <a
+        mat-list-item
+        routerLink="/signup/teacher"
+        *ngIf="
+          !(authService.user | async)?.email &&
+          !(authService.user | async)?.role
+        "
+        >Become a teacher</a
+      >
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -34,11 +54,17 @@
       <span class="logo" routerLink="/" routerLinkActive="active"
         >🔥 Brainiac</span
       >
-      
+
       <span class="fill-space"></span>
-      
+
       <div class="input-group rounded">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <input
+          type="search"
+          class="form-control rounded"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
         <span class="input-group-text border-0" id="search-addon">
           <i class="fas fa-search"></i>
         </span>
@@ -46,11 +72,35 @@
       <span class="fill-space"></span>
       <div *ngIf="!(isHandset$ | async)">
         <a mat-button routerLink="/kanban">🍱 Courses</a>
-        <a mat-button routerLink="/signup/teacher" *ngIf="!(authService.user | async)?.email && !(isTeacher$ | async)">Become a teacher</a>
-        <!-- <a mat-button routerLink="/signup/teacher" *ngIf="!(authService.user | async)?.email && (authService.user | async)?.role !== 'teacher'">Become a teacher</a> -->
-
-        <a mat-button routerLink="/login" *ngIf="!(authService.user | async)?.email" (click)="drawer.close()">Login</a>
-        <a mat-button routerLink="/signup/student" *ngIf="!(authService.user | async)?.email" (click)="drawer.close()">Signup</a>
+        <a
+          mat-button
+          routerLink="/signup/teacher"
+          *ngIf="
+            !(authService.user | async)?.email &&
+            !(authService.user | async)?.role
+          "
+          >Become a teacher</a
+        >
+        <a
+          mat-list-item
+          routerLink="/add-course"
+          *ngIf="(authService.user | async)?.role === 'teacher'"
+          >Add Course</a
+        >
+        <a
+          mat-button
+          routerLink="/login"
+          *ngIf="!(authService.user | async)?.email"
+          (click)="drawer.close()"
+          >Login</a
+        >
+        <a
+          mat-button
+          routerLink="/signup/student"
+          *ngIf="!(authService.user | async)?.email"
+          (click)="drawer.close()"
+          >Signup</a
+        >
       </div>
 
       <!-- DROPDOWN MENU -->
@@ -69,6 +119,5 @@
     </mat-toolbar>
 
     <!-- TRANSCLUSION -->
-
   </mat-sidenav-content>
 </mat-sidenav-container>
