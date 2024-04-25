@@ -50,29 +50,6 @@
       }
 }
 
-
-// .input-group {
-//   width: 100%;
-//   max-width: 400px; /* Dostosuj szerokość do swoich potrzeb */
-
-//   input {
-//     border-top-left-radius: 20px !important; /* Dostosuj promień zaokrąglenia */
-//     border-bottom-left-radius: 20px !important; /* Dostosuj promień zaokrąglenia */
-//     border: 1px solid #ced4da; /* Dostosuj kolor obramowania */
-//     padding: 10px; /* Dostosuj wypełnienie */
-//   }
-
-//   .input-group-text {
-//     background-color: #007bff; /* Dostosuj kolor tła ikony */
-//     border: 1px solid #007bff; /* Dostosuj kolor obramowania ikony */
-//     border-top-right-radius: 20px; /* Dostosuj promień zaokrąglenia */
-//     border-bottom-right-radius: 20px; /* Dostosuj promień zaokrąglenia */
-//     color: #fff; /* Dostosuj kolor ikony */
-//     cursor: pointer;
-//   }
-
-//   .input-group-text:hover {
-//     background-color: #0056b3; /* Dostosuj kolor tła ikony po najechaniu myszką */
-//     border-color: #0056b3; /* Dostosuj kolor obramowania ikony po najechaniu myszką */
-//   }
-// }
+.buttons a {
+  margin-right: 10px;
+}

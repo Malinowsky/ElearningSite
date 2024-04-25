@@ -18,6 +18,18 @@ export interface AuthResponseData {
   registered?: boolean;
 }
 
+interface UserData {
+  displayName?: string;
+  role?: 'teacher' | 'student';
+  phoneNumber?: string;
+  dateOfBirth?: string;
+  address?: {
+    street?: string;
+    city?: string;
+    postalCode?: string;
+  };
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User | null>(null);
@@ -206,32 +218,34 @@ export class AuthService {
     email: string,
     userId: string,
     token: string,
-    expiresIn: number,
-    displayName?: string,
-    phoneNumber?: string,
-    address?: { street?: string; city?: string; postalCode?: string },
-    dateOfBirth?: string
+    expiresIn: number
   ) {
-    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(
-      userId,
-      email,
-      token,
-      expirationDate,
-      displayName,
-      undefined, // Nie przekazujemy roli podczas logowania
-      undefined,
-      phoneNumber,
-      dateOfBirth,
-      address,
-      new Date()
-    );
+    this.firestore.collection('users').doc<UserData>(userId).get().subscribe(userDoc => {
+      const userData = userDoc.data();
+      const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+      const user = new User(
+        userId,
+        email,
+        token,
+        expirationDate,
+        userData?.displayName,
+        userData?.role,
+        undefined,
+        userData?.phoneNumber,
+        userData?.dateOfBirth,
+        userData?.address,
+        new Date()
+      );
   
-    this.user.next(user);
-    this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
-    console.log('User authenticated (login):', user);
+      this.user.next(user);
+      this.autoLogout(expiresIn * 1000);
+      localStorage.setItem('userData', JSON.stringify(user));
+      console.log('User authenticated (login):', user);
+    });
   }
+  
+  
+  
    
 
   private handleError(errorRes: HttpErrorResponse) {

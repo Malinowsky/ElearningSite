@@ -14,10 +14,11 @@ import { CoreModule } from './core.module';
 import { AuthModule } from './auth/auth.module';
 import { HeaderComponent } from './header/header.component';
 import { CoursesModule } from './courses/courses.module';
-import { CoursesRoutingModule } from './courses/components/course-list/course.routing.module';
+
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 
 @NgModule({
@@ -39,7 +40,9 @@ import { environment } from '../environments/environment';
     AuthModule,
     CoursesModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireStorageModule
+
 
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],

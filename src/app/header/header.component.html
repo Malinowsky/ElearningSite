@@ -70,10 +70,19 @@
         </span>
       </div>
       <span class="fill-space"></span>
-      <div *ngIf="!(isHandset$ | async)">
-        <a mat-button routerLink="/kanban">🍱 Courses</a>
+      <div class="buttons" *ngIf="!(isHandset$ | async)">
         <a
           mat-button
+          routerLink="/add-course"
+          *ngIf="(authService.user | async)?.role === 'teacher'"
+          >Add Course</a
+        >
+        <a mat-button routerLink="/kanban" *ngIf="authService.user | async"
+          >🍱 Courses</a
+        >
+        <a
+          mat-button
+          color="primary"
           routerLink="/signup/teacher"
           *ngIf="
             !(authService.user | async)?.email &&
@@ -81,21 +90,17 @@
           "
           >Become a teacher</a
         >
+
         <a
-          mat-list-item
-          routerLink="/add-course"
-          *ngIf="(authService.user | async)?.role === 'teacher'"
-          >Add Course</a
-        >
-        <a
-          mat-button
+          mat-flat-button
           routerLink="/login"
           *ngIf="!(authService.user | async)?.email"
           (click)="drawer.close()"
           >Login</a
         >
         <a
-          mat-button
+          mat-flat-button
+          color="primary"
           routerLink="/signup/student"
           *ngIf="!(authService.user | async)?.email"
           (click)="drawer.close()"

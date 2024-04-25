@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CourseService } from '../../../services/course.service';
 import { Course } from '../course.model';
+import { finalize } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 
 @Component({
@@ -11,29 +13,59 @@ import { Course } from '../course.model';
   styleUrls: ['./course-edit.component.scss']
 })
 export class CourseEditComponent implements OnInit {
-  courseId: string;
-  course: Course = {} as Course; // Inicjalizacja właściwości course jako pustego obiektu
+  course: Course = {} as Course;
+  selectedImage: File | null = null;
+  uploadProgress: number | null = null;
+  imageUrl: string | null = null;
 
-  constructor(private route: ActivatedRoute, private courseService: CourseService) {
-    this.courseId = this.route.snapshot.params['id'];
+  constructor(
+    private route: ActivatedRoute,
+    private courseService: CourseService,
+    private storage: AngularFireStorage
+  ) {}
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      const courseId = params['id'];
+
+      this.courseService.getCourseById(courseId).subscribe(course => {
+        this.course = course || ({} as Course); 
+      });
+    });
   }
 
-  ngOnInit(): void {
-    this.loadCourse();
-  }
+  saveChanges() {
+    if (this.selectedImage) {
+      const filePath = `course_images/${Date.now()}_${this.selectedImage.name}`;
+      const fileRef = this.storage.ref(filePath);
+      const uploadTask = this.storage.upload(filePath, this.selectedImage);
 
-  loadCourse(): void {
-    const loadedCourse = this.courseService.getCourseById(this.courseId);
-    if (loadedCourse !== null) {
-      this.course = loadedCourse;
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(url => {
+            this.imageUrl = url;
+            this.course.imageUrl = url; // Update course with image URL
+            this.saveCourse(); // Save course after image URL is obtained
+          });
+        })
+      ).subscribe();
     } else {
-      console.error(`Course with id ${this.courseId} not found.`);
-      // Potencjalnie tutaj można dodać przekierowanie na stronę błędu 404
+      this.saveCourse(); // Save course without uploading image
     }
   }
 
-  saveChanges(): void {
-    this.courseService.updateCourse(this.courseId, this.course);
-    // Możesz dodać odpowiednie działania po zapisaniu zmian, np. powrót do listy kursów
+  private saveCourse() {
+    this.courseService.updateCourse(this.course.id, this.course)
+      .then(() => {
+        console.log('Course updated:', this.course);
+      })
+      .catch(error => {
+        console.error('Error updating course:', error);
+      });
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.selectedImage = file;
   }
 }

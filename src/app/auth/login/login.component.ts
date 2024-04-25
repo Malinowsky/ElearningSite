@@ -31,6 +31,13 @@ export class LoginComponent implements OnInit {
         this.successMessage = 'You have been successfully logged in.';
         this.errorMessage = '';
         this.isLoading = false;
+        // Wywołujemy metodę handleLoginAuthentication
+        this.authService.handleLoginAuthentication(
+          email,
+          resData.localId,
+          resData.idToken,
+          +resData.expiresIn
+        );
       },
       (errorMessage) => {
         this.errorMessage = errorMessage;
@@ -38,6 +45,8 @@ export class LoginComponent implements OnInit {
         this.isLoading = false;
       }
     );
+    
+    
 
     form.reset();
   }

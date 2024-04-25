@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core'; // Move import to the 
 import { Course } from './course.model';
 import { CourseService } from '../../services/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 type CourseFilter = {
   [key: string]: string | null | undefined;
@@ -14,7 +15,7 @@ type CourseFilter = {
   styleUrls: ['./course-list.component.scss'],
 })
 export class CourseListComponent implements OnInit {
-  @Input() courses: Course[] | undefined;
+  @Input() courses: Observable<Course[]> | undefined;
   filteredCourses: Course[] = [];
   sliderCourses: Course[] = [];
   currentIndex: number = 0;
@@ -26,10 +27,10 @@ export class CourseListComponent implements OnInit {
   selectedDifficulty: string | null = null;
   selectedInstructor: string | null = null;
   selectedPriceRange: string | null = null;
-  selectAgeCourse: string | null = null;
   selectedRating: string | null = null;
+  selectAgeCourse: string | null = null;
 
-  constructor(private router:Router, private courseService: CourseService, private route: ActivatedRoute) {}
+  constructor(private router: Router, private courseService: CourseService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.fetchCourses();
@@ -46,13 +47,14 @@ export class CourseListComponent implements OnInit {
   }
 
   fetchCourses() {
-    const originalCourses = this.courseService.getAllCourses();
-    const shuffledCourses = this.shuffleArray(originalCourses);
-    this.courses = shuffledCourses.slice(0, 100);
-    this.filteredCourses = this.courses.slice();
-    this.sliderCourses = this.courses.slice(0, 10);
-
-    this.applyFilters();
+    this.courses = this.courseService.getAllCourses(); // Pobranie danych jako Observable<Course[]>
+    this.courses.subscribe((data: Course[]) => {
+      const originalCourses = data;
+      const shuffledCourses = this.shuffleArray(originalCourses);
+      this.filteredCourses = shuffledCourses.slice(0, 100);
+      this.sliderCourses = shuffledCourses.slice(0, 10);
+      this.applyFilters();
+    });
   }
 
   applyFilters() {
@@ -79,12 +81,12 @@ export class CourseListComponent implements OnInit {
     if (this.selectedRating !== undefined) {
       filters['rating'] = this.selectedRating;
     }
-
+  
     if (this.selectAgeCourse !== undefined) {
       filters['courseAge'] = this.selectAgeCourse;
     }
   
-    this.filteredCourses = this.courseService.filterCourses(
+    this.courseService.filterCourses(
       filters['category'] || null,
       filters['subcategory'] || null,
       filters['language'] || null,
@@ -93,8 +95,12 @@ export class CourseListComponent implements OnInit {
       filters['priceRange'] || null,
       filters['rating'] || null,
       filters['courseAge'] || null,
-    );
+    ).subscribe((filteredCourses: Course[]) => {
+      this.filteredCourses = filteredCourses;
+    });
   }
+  
+  
   
   onCategorySelected(category: string | null | undefined) {
     this.selectedCategory = category !== undefined ? category : null;
@@ -130,9 +136,9 @@ export class CourseListComponent implements OnInit {
     this.selectedRating = rating !== undefined ? rating : null;
     this.applyFilters();
   }
-
-  onCourseAgeSelected(courseAge: string | null) {
-    this.selectAgeCourse = courseAge;
+  
+  onCourseAgeSelected(courseAge: string | null | undefined) {
+    this.selectAgeCourse = courseAge !== undefined ? courseAge : null;
     this.applyFilters();
   }
   
@@ -156,7 +162,5 @@ export class CourseListComponent implements OnInit {
     if (this.currentIndex > 0) {
       this.currentIndex--;
     }
-  }
-
-  
+  }  
 }
