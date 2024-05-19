@@ -38,14 +38,14 @@
 .input-group {
   width: 100%;
   margin-left: 50px;
-  margin-right: 50px; /* Dodaj odstęp między polem wyszukiwania a resztą elementów */
+  margin-right: 50px; 
 
   .input-group-text {
-        background-color: #007bff; /* Dostosuj kolor tła ikony */
-        border: 1px solid #007bff; /* Dostosuj kolor obramowania ikony */
-        border-top-right-radius: 10px; /* Dostosuj promień zaokrąglenia */
-        border-bottom-right-radius: 10px; /* Dostosuj promień zaokrąglenia */
-        color: #fff; /* Dostosuj kolor ikony */
+        background-color: #007bff; 
+        border: 1px solid #007bff;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px; 
+        color: #fff; 
         cursor: pointer;
       }
 }

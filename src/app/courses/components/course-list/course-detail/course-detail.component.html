@@ -1,4 +1,4 @@
-<div *ngIf="course" class="course-card">
+<div *ngIf="course$ | async as course; else loading" class="course-card">
   <div class="course-header">
     <img
       [src]="course.imageUrl"
@@ -7,26 +7,26 @@
     />
 
     <div class="course-details">
-      <h2>{{ course.title }}</h2>
-      <h3>{{ course.subtitle }}</h3>
-      <p>{{ course.description }}</p>
+      <h2>{{ shortenTitle(course?.title) }}</h2>
+      <h3>{{ shortenSubtitle(course?.subtitle) }}</h3>
+      <p>{{ shortenDescription(course.description) }}</p>
     </div>
 
     <div class="course-main-content">
       <div class="top-content">
         <div class="info-button">
           <button mat-raised-button class="info-button non-clickable">
-            Language: {{ course.language.join(", ") }}
+            Language: {{ course.language }}
           </button>
         </div>
         <div class="info-button">
           <button mat-raised-button class="info-button non-clickable">
-            Created At: {{ course.createdAt | date }}
+            Created At: {{ formatDate(course?.createdAt) }}
           </button>
         </div>
         <div class="info-button">
           <button mat-raised-button class="info-button non-clickable">
-            Updated At: {{ course.updatedAt | date }}
+            Updated At: {{ formatDate(course?.updatedAt) }}
           </button>
         </div>
         <div class="info-button">
@@ -39,6 +39,12 @@
             Live Course
           </button>
         </div>
+        <div *ngIf="user$ | async as user">
+          <button *ngIf="user.uid === course.instructorId" mat-raised-button color="warn" [routerLink]="['/course/edit', course.id]">
+            Edit Course
+          </button>
+        </div>
+        
       </div>
 
       <div class="buttons">
@@ -62,13 +68,13 @@
 
   <div class="course-content">
     <button mat-raised-button class="info-button non-clickable">
-      Instructor: {{ course.instructor }}
+      Instructor: {{ course.instructorName }}
     </button>
     <button mat-raised-button class="info-button non-clickable">
       Rating: {{ course.userRating }}
     </button>
     <button mat-raised-button class="info-button non-clickable">
-      Subcategory: {{ course.subcategory.join(", ") }}
+      Subcategory: {{ course.subcategory}}
     </button>
     <button mat-raised-button class="info-button non-clickable">
       Difficulty: {{ course.difficulty }}
@@ -76,14 +82,14 @@
     <button mat-raised-button class="info-button non-clickable">
       Hours: {{ course.hours }}
     </button>
-    <button mat-raised-button class="info-button non-clickable">
+    <!-- <button mat-raised-button class="info-button non-clickable">
       Tags: {{ course.tags.join(", ") }}
-    </button>
+    </button> -->
   </div>
   <h4>Lessons:</h4>
-  <ul>
-    <li *ngFor="let lesson of course.lessons">
-      {{ lesson.title }} - {{ lesson.duration }} minutes
-    </li>
-  </ul>
+  
 </div>
+
+<ng-template #loading>
+  Loading course data...
+</ng-template>

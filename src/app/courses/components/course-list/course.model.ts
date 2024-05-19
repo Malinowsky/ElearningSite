@@ -1,27 +1,35 @@
-import { User } from '../../../auth/user.model';
-import { Lesson } from '../lessons/lesson.model';
+
+import { Timestamp } from 'firebase/firestore';
+import { Chapter } from '../chapters/chapters.model';
+
 
 export class Course {
-  constructor(
-    public id: string,
-    public title: string,
-    public subtitle: string,
-    public description: string,
-    public language: string[],
-    public imageUrl: string,
-    public instructor: string,
-    public price: number,
-    public isFree: boolean,
-    public studentsEnrolled: string[], // Tablica ID studentów zapisanych na kurs
-    public lessons: Lesson[], // Tablica lekcji kursu
-    public userRating: number,
-    public category: string[],
-    public subcategory: string[],
-    public difficulty: string,
-    public createdAt: Date,
-    public updatedAt: Date,
-    public tags: string[],
-    public hours: number,
-    public isLive: boolean,
-  ) {}
+  id?: string;
+  title: string = '';
+  subtitle: string = '';
+  description: string = '';
+
+  studentsEnrolled: string[] = [];
+  instructorId?: string;
+  instructorName?: string;
+
+  imageUrl: string = '';
+  language: string[] = [];
+  createdAt:  Timestamp | Date | undefined;
+  updatedAt:  Timestamp | Date | undefined;
+  isLive: boolean = false;
+  isFree: boolean = false;
+  price: number = 0;
+  
+  userRating: number = 0;
+  category: string[] = [];
+  subcategory: string[] = [];
+  difficulty: string = '';
+  hours: number = 0;
+  tags: string[] = [];
+  chapters: Chapter[] = [];
+
+  constructor(init?: Partial<Course>) {
+    Object.assign(this, init);
+  }
 }

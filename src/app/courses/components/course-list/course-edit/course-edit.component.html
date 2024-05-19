@@ -1,89 +1,172 @@
 <div *ngIf="course" class="course-edit">
-    <h1>Edit Course</h1>
   
-    <div class="form-group">
-      <label>Title:</label>
-      <input type="text" class="form-control" [(ngModel)]="course.title" name="title">
-    </div>
-  
-    <div class="form-group">
-      <label>Subtitle:</label>
-      <input type="text" class="form-control" [(ngModel)]="course.subtitle" name="subtitle">
-    </div>
-  
-    <div class="form-group">
-      <label>Description:</label>
-      <textarea class="form-control" [(ngModel)]="course.description" name="description"></textarea>
-    </div>
-    
-    <div class="form-group">
-      <label for="imageUpload">Upload Image:</label>
-      <input type="file" class="form-control-file" (change)="onFileSelected($event)" accept="image/*" id="imageUpload">
-    </div>
-    
-  
-    <div class="form-group">
-      <label>Language:</label>
-      <input type="text" class="form-control" [(ngModel)]="course.language" name="language">
-    </div>
-  
-    <div class="form-group">
-      <label>Price:</label>
-      <input type="number" class="form-control" [(ngModel)]="course.price" name="price">
-    </div>
-  
-    <div class="form-group">
-      <label>Is Free:</label>
-      <input type="checkbox" class="form-check-input" [(ngModel)]="course.isFree" name="isFree">
-    </div>
-  
-    <div class="form-group">
-      <label>Is Live:</label>
-      <input type="checkbox" class="form-check-input" [(ngModel)]="course.isLive" name="isLive">
-    </div>
-  
-    <div class="form-group">
-      <label>Instructor:</label>
-      <input type="text" class="form-control" [(ngModel)]="course.instructor" name="instructor">
-    </div>
-  
-    <div class="form-group">
-      <label>User Rating:</label>
-      <input type="number" class="form-control" [(ngModel)]="course.userRating" name="userRating">
-    </div>
-  
-    <div class="form-group">
-      <label>Subcategory:</label>
-      <input type="text" class="form-control" [(ngModel)]="course.subcategory" name="subcategory">
-    </div>
-  
-    <div class="form-group">
-      <label>Difficulty:</label>
-      <input type="text" class="form-control" [(ngModel)]="course.difficulty" name="difficulty">
-    </div>
-  
-    <div class="form-group">
-      <label>Hours:</label>
-      <input type="number" class="form-control" [(ngModel)]="course.hours" name="hours">
-    </div>
-  
-    <div class="form-group">
-      <label>Tags:</label>
-      <input type="text" class="form-control" [(ngModel)]="course.tags" name="tags">
-    </div>
-  
-    <h2>Lessons:</h2>
-    <ul>
-      <li *ngFor="let lesson of course.lessons; let i = index">
-        <div class="lesson">
-          <label>Title:</label>
-          <input type="text" class="form-control" [(ngModel)]="course.lessons[i].title" name="lessonTitle{{i}}">
-          <label>Duration:</label>
-          <input type="number" class="form-control" [(ngModel)]="course.lessons[i].duration" name="lessonDuration{{i}}">
+  <mat-card>
+    <h1>Add Course</h1>
+    <div class="form-row">
+      <mat-form-field appearance="fill" class="fill">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="course.title" name="title" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="fill">
+        <mat-label>Subtitle</mat-label>
+        <input matInput [(ngModel)]="course.subtitle" name="subtitle" />
+      </mat-form-field>
+
+      <mat-form-field class="filter-select">
+        <mat-label>Select Language</mat-label>
+        <mat-select
+          [(value)]="selectedLanguage"
+          (selectionChange)="onLanguageChange($event.value)"
+        >
+          <mat-option *ngFor="let language of languages" [value]="language">{{
+            language
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="filter-select">
+        <mat-label>Select Difficulty</mat-label>
+        <mat-select
+          [(value)]="selectedDifficulty"
+          (selectionChange)="onDifficultyChange($event.value)"
+        >
+          <mat-option
+            *ngFor="let difficulty of difficulties"
+            [value]="difficulty"
+            >{{ difficulty }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="fill">
+        <mat-label>Price</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="course.price"
+          name="price"
+          [disabled]="course.isFree"
+        />
+        <!-- Dodajemy warunek zależny od stanu isFree -->
+      </mat-form-field>
+
+      <mat-checkbox [(ngModel)]="course.isFree" name="isFree"
+        >Is Free</mat-checkbox
+      >
+
+      <mat-form-field appearance="fill" class="filter-select">
+        <mat-label>Select Category</mat-label>
+        <mat-select
+          [(value)]="selectedCategory"
+          (selectionChange)="onCategoryChange($event.value)"
+        >
+          <mat-option
+            *ngFor="let category of categories"
+            [value]="category.name"
+          >
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="fill"
+        class="filter-select"
+        *ngIf="subcategories.length > 0"
+      >
+        <mat-label>Select Subcategory</mat-label>
+        <mat-select [(ngModel)]="course.subcategory">
+          <mat-option
+            *ngFor="let subcategory of subcategories"
+            [value]="subcategory"
+          >
+            {{ subcategory }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter-select">
+        <mat-label>Hours</mat-label>
+        <input matInput type="number" [(ngModel)]="course.hours" name="hours" />
+      </mat-form-field>
+
+      <div class="tags-div" *ngFor="let tag of course.tags; let i = index; trackBy: trackByFn">
+        <mat-form-field appearance="fill" class="filter-select">
+          <mat-label>Tag {{i + 1}}</mat-label>
+          <input matInput [(ngModel)]="course.tags[i]" [name]="'tag-' + i">
+        </mat-form-field>
+        <div class="button-container" *ngIf="i === course.tags.length - 1">
+          <button mat-raised-button color="primary" (click)="addAnotherTag(); $event.stopPropagation()">
+  +
+</button>
         </div>
-      </li>
-    </ul>
-  
-    <button class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
+      </div>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="course.description"
+          name="description"
+        ></textarea>
+      </mat-form-field>
+
+      <div class="form-group">
+        <button
+          mat-raised-button
+          *ngIf="!imageUrl"
+          (click)="fileInput.click()"
+          color="primary"
+        >
+          Choose file photo
+        </button>
+
+        <input
+          #fileInput
+          type="file"
+          (change)="onFileSelected($event)"
+          hidden
+        />
+
+        <div *ngIf="imageUrl" (click)="fileInput.click()">
+          <img [src]="imageUrl" alt="Selected Photo" class="responsive-img" />
+        </div>
+      </div>
+    </div>
+
+    <mat-checkbox [(ngModel)]="course.isLive" name="isLive"
+      >Is Live</mat-checkbox
+    >
+
+    <div class="course-detail-container">
+      <h3>Chapters</h3>
+      <button mat-raised-button color="primary" (click)="addChapter()">Add Chapter</button>
+      <div *ngFor="let chapter of course?.chapters; let i = index" class="chapter-container">
+          <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Chapter Title</mat-label>
+              <input matInput [(ngModel)]="chapter.title" [name]="'chapterTitle-' + i">
+          </mat-form-field>
+          <img [src]="chapter.imageUrl || 'default-image.jpg'" alt="Chapter Thumbnail" class="thumbnail">
+          <button mat-button (click)="editImage(chapter)">Change Thumbnail</button>
+          <button mat-button (click)="addLesson(chapter)">Add Lesson</button>
+          <button mat-button (click)="addExam(chapter)">Add Exam</button>
+          <div *ngFor="let lesson of chapter.lessons">
+              <p>{{ lesson.title }}</p>
+          </div>
+          <div *ngFor="let exam of chapter.exams">
+              <p>{{ exam.title }}</p>
+          </div>
+      </div>
   </div>
-  
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="saveChanges()"
+      class="full-width"
+    >
+      Save Changes
+    </button>
+  </mat-card>
+</div>

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { catchError, tap } from 'rxjs/operators';
-import { throwError, BehaviorSubject } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { throwError, BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 import { User } from './user.model';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 export interface AuthResponseData {
   kind: string;
@@ -35,7 +36,12 @@ export class AuthService {
   user = new BehaviorSubject<User | null>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private firestore: AngularFirestore,private http: HttpClient, private router: Router) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private http: HttpClient,
+    private router: Router,
+    private afAuth: AngularFireAuth
+  ) {}
 
   signup(
     email: string,
@@ -184,34 +190,39 @@ export class AuthService {
       address,
       new Date()
     );
-  
+
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
     console.log('User authenticated (signup):', user);
-  
+
     const phoneNumberData = phoneNumber || null;
-    const addressData = address ? {
-      street: address.street || null,
-      city: address.city || null,
-      postalCode: address.postalCode || null
-    } : null;
+    const addressData = address
+      ? {
+          street: address.street || null,
+          city: address.city || null,
+          postalCode: address.postalCode || null,
+        }
+      : null;
     const dateOfBirthData = dateOfBirth || null;
-  
-    this.firestore.collection('users').doc(userId).set({
-      email: email,
-      displayName: displayName,
-      phoneNumber: phoneNumberData,
-      role: role,
-      address: addressData,
-      dateOfBirth: dateOfBirthData,
-    })
-    .then(() => {
-      console.log('User added to Firestore:', userId);
-    })
-    .catch(error => {
-      console.error('Error adding user to Firestore:', error);
-    });
+
+    this.firestore
+      .collection('users')
+      .doc(userId)
+      .set({
+        email: email,
+        displayName: displayName,
+        phoneNumber: phoneNumberData,
+        role: role,
+        address: addressData,
+        dateOfBirth: dateOfBirthData,
+      })
+      .then(() => {
+        console.log('User added to Firestore:', userId);
+      })
+      .catch((error) => {
+        console.error('Error adding user to Firestore:', error);
+      });
   }
 
   handleLoginAuthentication(
@@ -220,33 +231,36 @@ export class AuthService {
     token: string,
     expiresIn: number
   ) {
-    this.firestore.collection('users').doc<UserData>(userId).get().subscribe(userDoc => {
-      const userData = userDoc.data();
-      const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-      const user = new User(
-        userId,
-        email,
-        token,
-        expirationDate,
-        userData?.displayName,
-        userData?.role,
-        undefined,
-        userData?.phoneNumber,
-        userData?.dateOfBirth,
-        userData?.address,
-        new Date()
-      );
-  
-      this.user.next(user);
-      this.autoLogout(expiresIn * 1000);
-      localStorage.setItem('userData', JSON.stringify(user));
-      console.log('User authenticated (login):', user);
-    });
+    this.firestore
+      .collection('users')
+      .doc<UserData>(userId)
+      .get()
+      .subscribe((userDoc) => {
+        const userData = userDoc.data();
+        const expirationDate = new Date(
+          new Date().getTime() + expiresIn * 1000
+        );
+        const user = new User(
+          userId,
+          email,
+          token,
+          expirationDate,
+          userData?.displayName,
+          userData?.role,
+          undefined,
+          userData?.phoneNumber,
+          userData?.dateOfBirth,
+          userData?.address,
+          new Date()
+        );
+
+        this.user.next(user);
+        this.autoLogout(expiresIn * 1000);
+        localStorage.setItem('userData', JSON.stringify(user));
+        console.log('User authenticated (login):', user);
+      });
   }
-  
-  
-  
-   
+
 
   private handleError(errorRes: HttpErrorResponse) {
     console.error('Error response:', errorRes);

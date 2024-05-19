@@ -37,17 +37,14 @@ export class CourseListComponent implements OnInit {
   }
 
   navigateToCourse(course: Course) {
-    // Uzyskaj ID kursu
     const courseId = course.id;
-    console.log("Course ID:", courseId);
-  
-
-    // Przejdź do ścieżki kursu
-    this.router.navigate(['/course/'],{relativeTo: this.route});
+    console.log("Course ID to navigate:", courseId);
+    
+    this.router.navigate(['/course', courseId], { relativeTo: this.route });
   }
 
   fetchCourses() {
-    this.courses = this.courseService.getAllCourses(); // Pobranie danych jako Observable<Course[]>
+    this.courses = this.courseService.getAllCourses(); 
     this.courses.subscribe((data: Course[]) => {
       const originalCourses = data;
       const shuffledCourses = this.shuffleArray(originalCourses);

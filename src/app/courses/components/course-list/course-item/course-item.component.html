@@ -4,11 +4,17 @@
   class="course-tile"
 >
   <div class="course">
-    <img [src]="course?.imageUrl" [alt]="course?.title" class="course-image" />
+    <div class="course-image-container">
+      <img
+        [src]="course?.imageUrl"
+        [alt]="course?.title"
+        class="course-image"
+      />
+    </div>
     <div class="course-details">
       <h3>{{ shortenTitle(course?.title) }}</h3>
       <p [ngClass]="{ 'long-subtitle': shouldWrapSubtitle(course?.subtitle) }">
-        {{ course?.subtitle }}
+        {{ shortenSubtitle(course?.subtitle)}}
       </p>
       <p>Rating: {{ course?.userRating }}</p>
     </div>

@@ -24,12 +24,6 @@ const routes: Routes = [
     path: 'course/:id',
     component: CourseDetailComponent,
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'item',
-        component: CourseItemComponent,
-      },
-    ],
   },
   {
     path: 'course/edit/:id',

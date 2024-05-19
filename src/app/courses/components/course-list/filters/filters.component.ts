@@ -28,8 +28,7 @@ export class FiltersComponent {
     },
     // Inne kategorie...
   ];
-  languages: string[] = ['English', 'Spanish', 'French'];
-  difficulties: string[] = ['Beginner', 'Intermediate', 'Advanced'];
+
   instructors: string[] = ['John Doe', 'Jane Smith', 'Alice Johnson'];
   priceRanges: { label: string; value: string }[] = [
     { label: '$0 - $50', value: '0-50' },
@@ -62,8 +61,16 @@ export class FiltersComponent {
   selectedRating: string | null = null;
   selectedSubcategory: string | null = null;
   selectedCourseAge: string | null = null;
+  languages: string[] | undefined;
+  difficulties: string[] | undefined;
 
   constructor(private courseService: CourseService) {}
+
+  ngOnInit(): void {
+    this.languages = this.courseService.getLanguages();
+    this.difficulties = this.courseService.getDifficulties();
+    // Inicjalizacja innych danych z serwisu
+}
 
   getCategory(categoryName: string) {
     return (
@@ -81,9 +88,9 @@ export class FiltersComponent {
     this.selectedLanguage = language;
   }
 
-  onDifficultyChange(difficulty: string | null) {
-    this.selectedDifficulty = difficulty;
-  }
+  onDifficultyChange(difficulty: string | null): void {
+    this.courseService.setDifficulty(difficulty);
+}
 
   onInstructorChange(instructor: string | null) {
     this.selectedInstructor = instructor;

@@ -22,19 +22,27 @@
     height: 100%;
     max-width: 350px;
     
-   
-
-    .course-image {
+    .course-image-container {
       width: 50%; /* Zdjęcie zajmuje 50% szerokości kafelka */
       height: 100%;
-      border-radius: 15px !important;
-      margin-right: 15px;
+      display: flex;
+      align-items: center; /* Vertykalnie centrować obraz */
+      justify-content: center; /* Horyzontalnie centrować obraz */
+      overflow: hidden; /* Ukryj nadmiarowy obraz */
+    }
+
+    .course-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Zdjęcie wypełnia całe dostępne miejsce, zachowując proporcje */
+      border-radius: 15px 0 0 15px; /* Zaokrąglenie lewej strony */
     }
 
     .course-details {
       flex: 1;
       font-size: 16px;
-      max-width: calc(100% - 50% - 15px); /* przy założeniu, że obraz zajmuje 50% szerokości i jest margines 15px */
+      padding: 10px; /* Dodaj trochę paddingu wokół tekstu */
+      max-width: 50%; /* Maksymalna szerokość 50% */
       overflow: hidden;
       
 

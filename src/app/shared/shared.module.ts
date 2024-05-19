@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,6 +36,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatGridListModule,
     MatStepperModule,
     MatSelectModule,
+    ReactiveFormsModule,
   ],
   exports: [
     CommonModule,
@@ -55,6 +56,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatGridListModule,
     MatStepperModule,
     MatSelectModule,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}
