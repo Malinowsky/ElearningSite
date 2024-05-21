@@ -57,6 +57,6 @@ export class CourseDetailComponent implements OnInit {
   }
 
   shortenDescription(description?: string): string {
-    return description ? this.courseService.shortenTitle(description, 150) : '';
+    return description ? this.courseService.shortenTitle(description, 100) : '';
   }
 }

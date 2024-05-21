@@ -43,6 +43,7 @@ export class CourseEditComponent implements OnInit {
   selectedCategory: string | null = null;
   user = new BehaviorSubject<User | null>(null);
   
+  newLesson: Lesson = new Lesson();
 
   constructor(
     private route: ActivatedRoute,
@@ -106,19 +107,15 @@ export class CourseEditComponent implements OnInit {
     fileInput.click();
 }
 
-
   addChapter() {
     this.course.chapters.push(new Chapter({title: '', description: ''}));
   }
-  addLesson(chapter: Chapter): void {
-    const newLesson = new Lesson({
-      id: '', 
-      title: 'New Lesson',
-      content: '',
-      duration: 60 
-    });
+  
+  confirmAddLesson(chapter: Chapter): void {
     chapter.lessons = chapter.lessons || []; 
-    chapter.lessons.push(newLesson);
+    chapter.lessons.push({ ...this.newLesson });
+    this.newLesson = new Lesson(); 
+    chapter.showLessonForm = false; 
   }
 
   addExam(chapter: Chapter): void {
@@ -130,6 +127,15 @@ export class CourseEditComponent implements OnInit {
     });
     chapter.exams = chapter.exams || []; // Ensure the exams array is initialized
     chapter.exams.push(newExam);
+  }
+
+  onLessonFileSelected(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      const file: File = target.files[0];
+      // Handle the file selection logic here
+      console.log(file.name);
+    }
   }
   
 
@@ -259,7 +265,4 @@ export class CourseEditComponent implements OnInit {
         });
     }
   }
-  
-  
-
 }

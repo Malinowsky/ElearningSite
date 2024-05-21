@@ -1,5 +1,4 @@
 <div *ngIf="course" class="course-edit">
-  
   <mat-card>
     <h1>Add Course</h1>
     <div class="form-row">
@@ -91,15 +90,22 @@
         <input matInput type="number" [(ngModel)]="course.hours" name="hours" />
       </mat-form-field>
 
-      <div class="tags-div" *ngFor="let tag of course.tags; let i = index; trackBy: trackByFn">
+      <div
+        class="tags-div"
+        *ngFor="let tag of course.tags; let i = index; trackBy: trackByFn"
+      >
         <mat-form-field appearance="fill" class="filter-select">
-          <mat-label>Tag {{i + 1}}</mat-label>
-          <input matInput [(ngModel)]="course.tags[i]" [name]="'tag-' + i">
+          <mat-label>Tag {{ i + 1 }}</mat-label>
+          <input matInput [(ngModel)]="course.tags[i]" [name]="'tag-' + i" />
         </mat-form-field>
         <div class="button-container" *ngIf="i === course.tags.length - 1">
-          <button mat-raised-button color="primary" (click)="addAnotherTag(); $event.stopPropagation()">
-  +
-</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="addAnotherTag(); $event.stopPropagation()"
+          >
+            +
+          </button>
         </div>
       </div>
 
@@ -143,22 +149,32 @@
       <h3>Chapters</h3>
       <button mat-raised-button color="primary" (click)="addChapter()">Add Chapter</button>
       <div *ngFor="let chapter of course?.chapters; let i = index" class="chapter-container">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Chapter Title</mat-label>
+          <input matInput [(ngModel)]="chapter.title" [name]="'chapterTitle-' + i">
+        </mat-form-field>
+        <img [src]="chapter.imageUrl || 'default-image.jpg'" alt="Chapter Thumbnail" class="thumbnail">
+        <button mat-button (click)="editImage(chapter)">Change Thumbnail</button>
+        <button mat-button (click)="chapter.showLessonForm = true">Add Lesson</button>
+        <button mat-button (click)="addExam(chapter)">Add Exam</button>
+
+        <div *ngIf="chapter.showLessonForm">
           <mat-form-field appearance="fill" class="full-width">
-              <mat-label>Chapter Title</mat-label>
-              <input matInput [(ngModel)]="chapter.title" [name]="'chapterTitle-' + i">
+            <mat-label>Lesson Title</mat-label>
+            <input matInput [(ngModel)]="newLesson.title" [name]="'lessonTitle-' + i">
           </mat-form-field>
-          <img [src]="chapter.imageUrl || 'default-image.jpg'" alt="Chapter Thumbnail" class="thumbnail">
-          <button mat-button (click)="editImage(chapter)">Change Thumbnail</button>
-          <button mat-button (click)="addLesson(chapter)">Add Lesson</button>
-          <button mat-button (click)="addExam(chapter)">Add Exam</button>
-          <div *ngFor="let lesson of chapter.lessons">
-              <p>{{ lesson.title }}</p>
-          </div>
-          <div *ngFor="let exam of chapter.exams">
-              <p>{{ exam.title }}</p>
-          </div>
+          <input type="file" (change)="onLessonFileSelected($event)" />
+          <button mat-raised-button color="primary" (click)="confirmAddLesson(chapter)">Confirm</button>
+        </div>
+
+        <div *ngFor="let lesson of chapter.lessons">
+          <p>{{ lesson.title }}</p>
+        </div>
+        <div *ngFor="let exam of chapter.exams">
+          <p>{{ exam.title }}</p>
+        </div>
       </div>
-  </div>
+    </div>
 
     <button
       mat-raised-button

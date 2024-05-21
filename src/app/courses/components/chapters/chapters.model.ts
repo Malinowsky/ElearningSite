@@ -8,10 +8,12 @@ export class Chapter {
   lessons?: Lesson[];
   exams?: Exam[];
   imageUrl?: string;
+  showLessonForm?: boolean; // Add this property
 
   constructor(init?: Partial<Chapter>) {
     Object.assign(this, init);
     this.lessons = this.lessons || [];
     this.exams = this.exams || [];
+    this.showLessonForm = false; // Initialize the property
   }
 }

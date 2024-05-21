@@ -4,22 +4,46 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   overflow: hidden;
-  margin-right: 15%;
-  margin-top: 1%;
-  margin-left: 15%;
+  margin: 1% 10%; /* Ustawienie marginesów w poziomie i pionie */
+
+  @media (max-width: 1200px) {
+    margin: 1% 8%;
+  }
+
+  @media (max-width: 1028px) {
+    margin: 1% 5%;
+  }
+
+  @media (max-width: 768px) {
+    margin: 1% 2%;
+  }
+
+  @media (max-width: 576px) {
+    margin: 1% 1%;
+  }
 
   .course-header {
     background-color: #f5f5f5;
     display: flex;
+    flex-direction: column; /* Ustawienie kolumn dla małych ekranów */
     padding: 20px;
-    height: 350px;
+    height: auto; /* Dynamiczna wysokość */
     position: relative;
 
+    @media (min-width: 1028px) {
+      flex-direction: row; /* Ustawienie wierszy dla większych ekranów */
+      height: auto;
+    }
   }
+
   .course-header h2 {
-    margin-top: 0;
+    margin-top: 10px;
     margin-bottom: 5px;
     font-weight: bold;
+
+    @media (min-width: 1028px) {
+      margin-top: 0;
+    }
   }
 
   .course-header h3 {
@@ -28,99 +52,148 @@
   }
 
   .course-image {
-    max-width: 40%;
-    height: 100%;
+    max-width: 100%; /* Ustawienie maksymalnej szerokości na 100% */
+    height: 100%; /* Dynamiczna wysokość */
     border-radius: 10px;
-    flex-shrink: 0; /* Zapobieganie zmniejszaniu obrazka */
-    margin-right: 20px; /* Dodatkowy margines między obrazkiem a tekstem */
+    flex-shrink: 0;
+    margin-right: 0;
+    margin-bottom: 20px; /* Margines dolny dla odstępu */
     transition: filter 0.3s ease;
     cursor: grab;
-    position: relative; /* Ustawienie pozycji względnej, aby móc użyć pseudo-elementu */
+    position: relative;
+
+    @media (min-width: 1028px) {
+      max-width: 40%;
+      margin-right: 20px;
+      margin-bottom: 0;
+      height: 100%;
+    }
   }
 
   .course-image:hover {
     filter: grayscale(100%);
   }
-}
 
-.course-details {
-  flex-grow: 1; /* Elastyczne dopasowanie szerokości */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Wyśrodkowanie w pionie */
-}
-
-
-.course-main-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Rozłożenie elementów w pionie */
-  align-items: flex-end; /* Przesunięcie elementów na prawy bok */
-  .buttons {
-    margin-top: auto;
+  .course-details {
+    flex-grow: 1;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 10px;
+  }
+
+  .course-main-content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start; /* Wyśrodkowanie elementów na lewo */
+
+    @media (min-width: 1028px) {
+      align-items: flex-end; /* Przesunięcie elementów na prawy bok dla większych ekranów */
+    }
+
+    .buttons {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column; /* Ustawienie kolumn dla małych ekranów */
+      gap: 10px;
+      
+
+      @media (min-width: 1028px) {
+        flex-direction: row; /* Ustawienie wierszy dla większych ekranów */
+        flex-wrap: wrap; /* Dostosowanie szerokości przycisków do dostępnej przestrzeni */
+      }
+
+      button {
+        margin-bottom: 10px;
+        margin-right: 0;
+        width: 100%;
+        font-size: 14px;
+
+        @media (min-width: 1028px) {
+          margin-right: 10px;
+          margin-bottom: 10px;
+          width: auto;
+          font-size: 12px;
+          flex: 1 1 auto; /* Elastyczność szerokości przycisków */
+        }
+      }
+
+      button:hover {
+        filter: brightness(90%);
+      }
+
+      .mat-icon-button {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .mat-success {
+        background-color: green;
+        color: #fff;
+        cursor: initial;
+      }
+    }
+  }
+
+  .top-content {
+    text-align: left; /* Ustawienie wyrównania do lewej */
+    
+    
+    @media (min-width: 1028px) {
+      text-align: right; /* Wyrównanie do prawej dla większych ekranów */
+    }
   
+    .info-button {
+      margin-bottom: 5px;
+      border-radius: 15px;
+
+      cursor: initial;
+      white-space: nowrap; /* Zapobieganie zawijaniu tekstu */
+      @media (max-width: 1200px) {
+        white-space: normal; /* Pozwolenie na zawijanie tekstu na mniejszych ekranach */
+      }
+    }
+  }
+
+  .course-content {
+    padding: 20px;
+    cursor: initial;
+
     button {
-      margin-right: 10px; /* Increased margin between buttons */
-      border-radius: 10px; /* Increased border radius for a rounder look */
-      width: 100px;
-      font-size: 12px; /* Increased font size for better readability */
-      transition: filter 0.3s ease;
-    }
-  
-    button:hover {
-      filter: brightness(90%);
-    }
-  
-    .mat-icon-button {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-  
-    button[type="button"] {
-      flex-grow: 0;
+      border-radius: 10px;
+      margin-right: 10px;
+      margin-bottom: 10px;
     }
 
-    .mat-success {
-      background-color: green;
-      color: #fff;
-      cursor: initial ;
+    @media (min-width: 1028px) {
+      button {
+        margin-bottom: 0;
+      }
+    }
   }
-  }
-}
 
-.top-content{
-  text-align: right;
-  .info-button{
-    border-radius: 15px;
-    margin-bottom: 5px;
-    cursor: initial ;
-  }
-}
+  .course-lessons {
+    float: none;
+    margin: 20px 0;
+    width: 100%;
 
-.course-content {
-  padding: 20px;
-  cursor: initial ;
-  button{
-    border-radius: 10px;
-    margin-right: 10px; /* Increased margin between buttons */
-  }
-}
+    @media (min-width: 1028px) {
+      float: right;
+      margin-left: 20px;
+      width: 40%;
+    }
 
-.course-lessons {
-  float: right;
-  margin-left: 20px; /* Dodatkowy margines, aby oddzielić sekcję lekcji od treści */
-  width: 40%; /* Ustawienie szerokości sekcji lekcji */
+    h4 {
+      margin-bottom: 10px;
+    }
 
-  .course-lessons h4 {
-    margin-bottom: 10px;
-  }
-  
-  .course-lessons ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .course-lessons li {
-    margin-bottom: 5px;
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
   }
 }
