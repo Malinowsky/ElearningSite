@@ -3,6 +3,7 @@ export class Lesson {
   public title?: string;
   public content?: string;
   public duration?: number;
+  public fileUrl?: string;
   
 
   constructor(init?: Partial<Lesson>) {

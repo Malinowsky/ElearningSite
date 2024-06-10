@@ -4,7 +4,6 @@ import { AuthGuard } from '../../../auth/auth.guard';
 import { CourseListComponent } from './course-list.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
-import { CourseItemComponent } from './course-item/course-item.component';
 
 const routes: Routes = [
   {

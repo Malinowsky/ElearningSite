@@ -33,16 +33,16 @@ export class SignupTeacherComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-    console.log('Form value:', form.value); // Dodaj ten log
+    console.log('Form value:', form.value); 
     const email = form.value.email;
     const password = form.value.password;
     const displayName = form.value.namesurname;
     const role = 'teacher';
     const phoneNumber = form.value.phoneNumber;
     const address = {
-      street: form.value.street, // Pobierz wartość pola Street
-      city: form.value.city, // Pobierz wartość pola City
-      postalCode: form.value.postalCode // Pobierz wartość pola Postal Code
+      street: form.value.street,
+      city: form.value.city, 
+      postalCode: form.value.postalCode 
     };
     const dateOfBirth = form.value.dateOfBirth;
 

@@ -20,7 +20,6 @@ export class CourseListComponent implements OnInit {
   sliderCourses: Course[] = [];
   currentIndex: number = 0;
 
-  // Define filter variables
   selectedCategory: string | null = null;
   selectedSubcategory: string | null = null;
   selectedLanguage: string | null = null;

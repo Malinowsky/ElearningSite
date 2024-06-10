@@ -2,6 +2,9 @@
   <mat-card>
     <h1>Add Course</h1>
     <div class="form-row">
+      <mat-checkbox [(ngModel)]="course.isLive" name="isLive"
+        >Is Live</mat-checkbox
+      >
       <mat-form-field appearance="fill" class="fill">
         <mat-label>Title</mat-label>
         <input matInput [(ngModel)]="course.title" name="title" />
@@ -47,7 +50,7 @@
           name="price"
           [disabled]="course.isFree"
         />
-        <!-- Dodajemy warunek zależny od stanu isFree -->
+       
       </mat-form-field>
 
       <mat-checkbox [(ngModel)]="course.isFree" name="isFree"
@@ -141,34 +144,87 @@
       </div>
     </div>
 
-    <mat-checkbox [(ngModel)]="course.isLive" name="isLive"
-      >Is Live</mat-checkbox
-    >
-
     <div class="course-detail-container">
       <h3>Chapters</h3>
-      <button mat-raised-button color="primary" (click)="addChapter()">Add Chapter</button>
-      <div *ngFor="let chapter of course?.chapters; let i = index" class="chapter-container">
+      <button mat-raised-button color="primary" (click)="addChapter()">
+        Add Chapter
+      </button>
+      <div
+        *ngFor="let chapter of course?.chapters; let i = index"
+        class="chapter-container"
+      >
+        <div class="header-chapter-container">
+          <img
+            *ngIf="chapter.imageUrl"
+            [src]="chapter.imageUrl"
+            alt="Chapter Thumbnail"
+            class="thumbnail"
+            (click)="editImage(chapter)"
+          />
+          <h4>Chapter {{ i + 1 }}</h4>
+        </div>
+
+        <button mat-button (click)="chapter.showLessonForm = true">
+          Add Lesson
+        </button>
+        <button mat-button (click)="addExam(chapter)">Add Exam</button>
+        <button
+          mat-button
+          *ngIf="!chapter.imageUrl"
+          (click)="editImage(chapter)"
+        >
+          Add photo to chapter
+        </button>
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Chapter Title</mat-label>
-          <input matInput [(ngModel)]="chapter.title" [name]="'chapterTitle-' + i">
+          <input
+            matInput
+            [(ngModel)]="chapter.title"
+            [name]="'chapterTitle-' + i"
+          />
         </mat-form-field>
-        <img [src]="chapter.imageUrl || 'default-image.jpg'" alt="Chapter Thumbnail" class="thumbnail">
-        <button mat-button (click)="editImage(chapter)">Change Thumbnail</button>
-        <button mat-button (click)="chapter.showLessonForm = true">Add Lesson</button>
-        <button mat-button (click)="addExam(chapter)">Add Exam</button>
 
         <div *ngIf="chapter.showLessonForm">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Lesson Title</mat-label>
-            <input matInput [(ngModel)]="newLesson.title" [name]="'lessonTitle-' + i">
+            <input
+              matInput
+              [(ngModel)]="newLesson.title"
+              [name]="'lessonTitle-' + i"
+            />
           </mat-form-field>
-          <input type="file" (change)="onLessonFileSelected($event)" />
-          <button mat-raised-button color="primary" (click)="confirmAddLesson(chapter)">Confirm</button>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Lesson Content</mat-label>
+            <textarea matInput [(ngModel)]="newLesson.content" [name]="'lessonContent-' + i"></textarea>
+          </mat-form-field>
+          <div *ngIf="newLesson.fileUrl">
+            <video width="320" height="240" controls>
+              <source [src]="newLesson.fileUrl" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <button mat-button (click)="editLessonFile(newLesson)">
+            Add Lesson file
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="confirmAddLesson(chapter)"
+          >
+            Confirm
+          </button>
         </div>
 
-        <div *ngFor="let lesson of chapter.lessons">
-          <p>{{ lesson.title }}</p>
+        <div *ngFor="let lesson of chapter.lessons" class="lesson-container">
+          <h3>{{ lesson.title }}</h3>
+          <p>{{ lesson.content }}</p>
+          <div *ngIf="lesson.fileUrl">
+            <video width="320" height="240" controls>
+              <source [src]="lesson.fileUrl" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
         <div *ngFor="let exam of chapter.exams">
           <p>{{ exam.title }}</p>

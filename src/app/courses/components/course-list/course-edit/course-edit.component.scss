@@ -7,24 +7,24 @@
 }
 
 .full-width {
-  width: 100%; /* Domyślnie szerokość 100%, dla mniejszych ekranów */
+  width: 100%; 
 }
 
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px; /* Ustawia odstępy między elementami */
+  gap: 16px; 
 }
 
 .mat-form-field,
 .mat-checkbox {
-  flex: 1 1 48%; /* Dzieli kontener na dwie równe części */
-  max-width: 48%; /* Zapewnia, że każde pole nie przekracza 48% szerokości */
+  flex: 1 1 48%; 
+  max-width: 48%; 
 }
 
 .upload-section, .image-section {
   margin-bottom: 20px;
-  width: 100%; /* Upewnia się, że zdjęcie zajmuje pełną szerokość */
+  width: 100%; 
 }
 
 .responsive-img {
@@ -43,23 +43,29 @@
 }
 
 .tag-add-button{
-  width: 36px; /* Width of the button to make it square */
-  height: 36px; /* Height of the button to match the width */
-  border-radius: 50%; /* Makes the button circular */
-  min-width: 0; /* Overrides Material default to allow smaller button */
+  width: 36px; 
+  height: 36px; 
+  border-radius: 50%; 
+  min-width: 0; 
 }
 .mat-form-field {
-  flex-grow: 1; /* Allows the input field to take up remaining space */
+  flex-grow: 1; 
   display: flex;
   align-items: center; 
 }
 
 .course-detail-container {
+  margin-top: 10px;
   .chapter-container {
+    .header-chapter-container {
+      display: flex;
+      align-items: center;
+      gap: 10px; 
+    }
       margin-top: 20px;
       border: 1px solid #ccc;
       padding: 15px;
-      border-radius: 8px;
+      border-radius: 10px;
       .full-width {
           width: 100%;
       }
@@ -68,6 +74,12 @@
           height: 100px;
           object-fit: cover;
       }
+  }
+  .lesson-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
   }
   padding-bottom: 10px;
 }

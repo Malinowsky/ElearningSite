@@ -4,7 +4,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   overflow: hidden;
-  margin: 1% 10%; /* Ustawienie marginesów w poziomie i pionie */
+  margin: 1% 10%;
 
   @media (max-width: 1200px) {
     margin: 1% 8%;
@@ -25,14 +25,13 @@
   .course-header {
     background-color: #f5f5f5;
     display: flex;
-    flex-direction: column; /* Ustawienie kolumn dla małych ekranów */
+    flex-direction: row;
     padding: 20px;
-    height: auto; /* Dynamiczna wysokość */
+    height: auto;
     position: relative;
 
-    @media (min-width: 1028px) {
-      flex-direction: row; /* Ustawienie wierszy dla większych ekranów */
-      height: auto;
+    @media (max-width: 1028px) {
+      flex-direction: column;
     }
   }
 
@@ -52,21 +51,19 @@
   }
 
   .course-image {
-    max-width: 100%; /* Ustawienie maksymalnej szerokości na 100% */
-    height: 100%; /* Dynamiczna wysokość */
+    max-width: 40%;
+    height: auto;
     border-radius: 10px;
     flex-shrink: 0;
-    margin-right: 0;
-    margin-bottom: 20px; /* Margines dolny dla odstępu */
+    margin-right: 20px;
+    margin-bottom: 0;
     transition: filter 0.3s ease;
     cursor: grab;
-    position: relative;
 
-    @media (min-width: 1028px) {
-      max-width: 40%;
-      margin-right: 20px;
-      margin-bottom: 0;
-      height: 100%;
+    @media (max-width: 1028px) {
+      max-width: 100%;
+      margin-right: 0;
+      margin-bottom: 20px;
     }
   }
 
@@ -85,37 +82,32 @@
   .course-main-content {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
 
-    align-items: flex-start; /* Wyśrodkowanie elementów na lewo */
-
-    @media (min-width: 1028px) {
-      align-items: flex-end; /* Przesunięcie elementów na prawy bok dla większych ekranów */
+    @media (max-width: 1028px) {
+      align-items: flex-start;
     }
 
     .buttons {
-      margin-top: auto;
+      justify-content: flex-end;
+      margin-top: 10px;
       display: flex;
-      flex-direction: column; /* Ustawienie kolumn dla małych ekranów */
+      flex-direction: row;
+      flex-wrap: wrap;
       gap: 10px;
-      
-
-      @media (min-width: 1028px) {
-        flex-direction: row; /* Ustawienie wierszy dla większych ekranów */
-        flex-wrap: wrap; /* Dostosowanie szerokości przycisków do dostępnej przestrzeni */
-      }
 
       button {
         margin-bottom: 10px;
-        margin-right: 0;
-        width: 100%;
-        font-size: 14px;
+        margin-left: 10px;
+        width: auto;
+        font-size: 12px;
+        flex: 1 1 auto;
 
-        @media (min-width: 1028px) {
-          margin-right: 10px;
-          margin-bottom: 10px;
-          width: auto;
-          font-size: 12px;
-          flex: 1 1 auto; /* Elastyczność szerokości przycisków */
+        @media (max-width: 1028px) {
+          width: 100%;
+          font-size: 14px;
+          margin-right: 0;
         }
       }
 
@@ -136,21 +128,20 @@
   }
 
   .top-content {
-    text-align: left; /* Ustawienie wyrównania do lewej */
-    
-    
-    @media (min-width: 1028px) {
-      text-align: right; /* Wyrównanie do prawej dla większych ekranów */
+    text-align: right;
+
+    @media (max-width: 1028px) {
+      text-align: left;
     }
-  
+
     .info-button {
       margin-bottom: 5px;
       border-radius: 15px;
-
       cursor: initial;
-      white-space: nowrap; /* Zapobieganie zawijaniu tekstu */
+      white-space: nowrap;
+
       @media (max-width: 1200px) {
-        white-space: normal; /* Pozwolenie na zawijanie tekstu na mniejszych ekranach */
+        white-space: normal;
       }
     }
   }
@@ -163,10 +154,8 @@
       border-radius: 10px;
       margin-right: 10px;
       margin-bottom: 10px;
-    }
 
-    @media (min-width: 1028px) {
-      button {
+      @media (max-width: 1028px) {
         margin-bottom: 0;
       }
     }

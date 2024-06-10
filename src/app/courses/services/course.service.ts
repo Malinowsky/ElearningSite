@@ -200,7 +200,7 @@ export class CourseService {
     if (courseAge) {
       const boundaryDate = this.getBoundaryDate(courseAge);
       filteredCourses = filteredCourses.filter(
-        (course) => course.createdAt && course.createdAt > boundaryDate // Added null check here
+        (course) => course.createdAt && course.createdAt > boundaryDate 
       );
     }
 
@@ -243,7 +243,7 @@ export class CourseService {
           today.getDate()
         ); // 3 lata temu
       default:
-        return new Date(); // Jeśli podano niepoprawny warunek wieku, zwracamy datę dzisiejszą
+        return new Date(); 
     }
   }
 
@@ -257,10 +257,8 @@ export class CourseService {
 
   shortenDescription(description: string, maxLength: number): string {
     if (description.length > maxLength) {
-      // Truncate the description to the maximum length minus 3 to accommodate the ellipsis
       return description.slice(0, maxLength - 3) + '...';
     } else {
-      // Return the original description if it's within the limit
       return description;
     }
   }

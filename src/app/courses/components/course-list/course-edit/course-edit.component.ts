@@ -64,12 +64,12 @@ export class CourseEditComponent implements OnInit {
       if (courseId) {
         this.courseService.getCourseById(courseId).subscribe(course => {
           this.course = course || new Course(); 
-          this.course.tags = this.course.tags || ['']; // Ensure tags are initialized
+          this.course.tags = this.course.tags || ['']; 
           this.imageUrl = this.course.imageUrl || '';
         });
       } else {
         this.course = new Course();
-        this.course.tags = ['']; // Initialize with one empty tag
+        this.course.tags = [''];
       }
     });
     this.difficulties = this.courseService.getDifficulties();
@@ -84,7 +84,7 @@ export class CourseEditComponent implements OnInit {
   }
 
   trackByFn(index: any, item: any) {
-    return index; // or item.id if you have unique ids
+    return index;
   }
 
   addAnotherTag(): void {
@@ -100,11 +100,27 @@ export class CourseEditComponent implements OnInit {
     fileInput.onchange = () => {
         if (fileInput.files && fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            // Implement your logic to handle the file upload and assign the URL to the chapter.imageUrl
             chapter.imageUrl = URL.createObjectURL(file);
         }
     };
     fileInput.click();
+}
+
+editLessonFile(lesson: Lesson) {
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = 'video/*';
+  fileInput.onchange = (event: any) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        lesson.fileUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  fileInput.click();
 }
 
   addChapter() {
@@ -123,7 +139,7 @@ export class CourseEditComponent implements OnInit {
       title: 'New Exam',
       description: '',
       duration: 30, // Default duration in minutes
-      numberOfQuestions: 10 // Default number of questions
+      numberOfQuestions: 10 
     });
     chapter.exams = chapter.exams || []; // Ensure the exams array is initialized
     chapter.exams.push(newExam);
@@ -133,7 +149,6 @@ export class CourseEditComponent implements OnInit {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length) {
       const file: File = target.files[0];
-      // Handle the file selection logic here
       console.log(file.name);
     }
   }
@@ -203,20 +218,17 @@ export class CourseEditComponent implements OnInit {
   }
   
   private saveOrUpdateCourse(): void {
-    // Pobierz dane aktualnie zalogowanego użytkownika
+    
     const currentUser = this.user.value;
   
     if (currentUser) {
-      // Pobierz ID dokumentu użytkownika z Firestore
       this.firestore.collection('users', ref => ref.where('email', '==', currentUser.email))
         .get()
         .subscribe(querySnapshot => {
           if (!querySnapshot.empty) {
             const userDoc = querySnapshot.docs[0];
             const userId = userDoc.id;
-            const userData = userDoc.data() as { displayName?: string }; // Typowanie userData
-  
-            // Przypisz ID i nazwę instruktora do kursu
+            const userData = userDoc.data() as { displayName?: string }; 
             this.course.instructorId = userId;
             this.course.instructorName = userData.displayName || 'default-instructor-name';
   
@@ -244,15 +256,13 @@ export class CourseEditComponent implements OnInit {
             };
   
             if (this.course.id) {
-              // Update existing course
               this.courseService.updateCourse(this.course.id, courseData)
                 .then(() => console.log('Course updated successfully:', this.course))
                 .catch(error => console.error('Error updating course:', error));
             } else {
-              // Add new course
               this.courseService.addCourse(courseData)
                 .then((docRef) => {
-                  this.course.id = docRef.id; // Now set the ID after adding the course
+                  this.course.id = docRef.id; 
                   console.log('Course added successfully:', this.course);
                 })
                 .catch(error => console.error('Error adding course:', error));
